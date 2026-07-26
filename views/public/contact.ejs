@@ -9,23 +9,30 @@
       </p>
     </div>
 
-    <!-- CONTACT CARDS -->
+    <!-- CONTACT CARDS WITH SVG ICONS -->
     <div class="contact-grid">
       <div class="contact-item">
-        <h4>📍 Adresimiz</h4>
+        <h4 style="display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Adresimiz
+        </h4>
         <p style="color: var(--text-dark); font-weight: 600; margin-top: 0.4rem;">
           <%= cafeInfo.address %>
         </p>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
           Pendik / İstanbul
         </p>
-        <a href="<%= cafeInfo.mapsUrl %>" target="_blank" class="btn-primary" style="display: inline-block; margin-top: 1rem; padding: 0.55rem 1.1rem; font-size: 0.85rem;">
-          🗺️ Google Maps Yol Tarifi &rarr;
+        <a href="<%= cafeInfo.mapsUrl %>" target="_blank" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding: 0.55rem 1.1rem; font-size: 0.85rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          Google Maps Yol Tarifi
         </a>
       </div>
 
       <div class="contact-item">
-        <h4>📞 Telefon & İletişim</h4>
+        <h4 style="display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Telefon & İletişim
+        </h4>
         <p style="color: var(--text-dark); font-weight: 700; font-size: 1.1rem; margin-top: 0.4rem;">
           <a href="tel:<%= cafeInfo.phoneRaw %>"><%= cafeInfo.phone %></a>
         </p>
@@ -35,7 +42,10 @@
       </div>
 
       <div class="contact-item">
-        <h4>⏰ Çalışma Saatleri</h4>
+        <h4 style="display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Çalışma Saatleri
+        </h4>
         <p style="color: var(--text-dark); font-weight: 600; margin-top: 0.4rem;">
           <%= cafeInfo.hours %>
         </p>
@@ -48,13 +58,12 @@
     <!-- ACCURATE GOOGLE MAPS EMBED -->
     <div style="margin-top: 2.5rem; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
       <iframe 
-        src="https://maps.google.com/maps?q=Dumlup%C4%B1nar%2C+Sahaf+Sk+No%3A3+D%3AA%2C+34000+Pendik%2F%C4%B0stanbul&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+        src="https://maps.google.com/maps?q=Dumlupinar+Sahaf+Sk+No+3+Pendik+Istanbul&t=&z=16&ie=UTF8&iwloc=&output=embed" 
         width="100%" 
         height="380" 
         style="border:0;" 
         allowfullscreen="" 
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
+        loading="lazy">
       </iframe>
     </div>
   </div>

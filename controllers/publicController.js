@@ -13,13 +13,13 @@ const getHomePage = async (req, res) => {
       .limit(6);
 
     res.render('public/index', {
-      title: 'Qfi Coffee & Bakery | Lezzet & Kahve Deneyimi',
+      title: 'Qfi Cafe | Pendik Butik Cafe & Lezzet Deneyimi',
       featuredProducts: featuredProducts || []
     });
   } catch (error) {
     console.error('Home controller error:', error);
     res.render('public/index', {
-      title: 'Qfi Coffee & Bakery',
+      title: 'Qfi Cafe | Pendik Butik Cafe',
       featuredProducts: []
     });
   }
@@ -43,7 +43,7 @@ const getMenuPage = async (req, res) => {
     const selectedCategory = req.query.category || 'all';
 
     res.render('public/menu', {
-      title: 'Kahve & Lezzet Menüsü | Qfi Coffee',
+      title: 'Kahve & Lezzet Menüsü | Qfi Cafe',
       categories: categories || [],
       products: products || [],
       selectedCategory
@@ -51,7 +51,7 @@ const getMenuPage = async (req, res) => {
   } catch (error) {
     console.error('Menu controller error:', error);
     res.status(500).render('public/menu', {
-      title: 'Menü | Qfi Coffee',
+      title: 'Menü | Qfi Cafe',
       categories: [],
       products: [],
       selectedCategory: 'all',
@@ -65,7 +65,7 @@ const getMenuPage = async (req, res) => {
  */
 const getAboutPage = (req, res) => {
   res.render('public/about', {
-    title: 'Hakkımızda | Qfi Coffee & Bakery'
+    title: 'Hakkımızda | Qfi Cafe'
   });
 };
 
@@ -74,7 +74,7 @@ const getAboutPage = (req, res) => {
  */
 const getContactPage = (req, res) => {
   res.render('public/contact', {
-    title: 'Bize Ulaşın & Konum | Qfi Coffee',
+    title: 'Bize Ulaşın & Konum | Qfi Cafe',
     cafeInfo: {
       address: 'Dumlupınar, Sahaf Sk No:3 D:A, 34000 Pendik/İstanbul',
       phone: '0501 558 09 58',

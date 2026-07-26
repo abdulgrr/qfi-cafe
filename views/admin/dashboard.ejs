@@ -3,30 +3,34 @@
 <main class="admin-container">
   <div class="admin-header">
     <div>
-      <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--text-dark);">☕ Qfi Coffee - Yönetim Paneli</h1>
+      <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--text-dark); display: flex; align-items: center; gap: 0.6rem;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
+        Qfi Coffee - Yönetim Paneli
+      </h1>
       <p style="color: var(--text-muted);">Menü ürünlerini ve kategorilerini buradan kolayca yönetebilirsiniz.</p>
     </div>
-    <a href="/admin/products/add" class="btn-primary">
-      ➕ Yeni Ürün Ekle
+    <a href="/admin/products/add" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Yeni Ürün Ekle
     </a>
   </div>
 
-  <!-- CATEGORY MANAGEMENT CARD -->
+  <!-- CATEGORY MANAGEMENT CARD (AUTOMATIC ORDER ASSIGNMENT) -->
   <div class="admin-card">
-    <h3 style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--primary);">📁 Kategori Yönetimi</h3>
+    <h3 style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      Kategori Yönetimi
+    </h3>
     
-    <!-- Add Category Form -->
+    <!-- Add Category Form (NO Manual Order input - Automatically Assigned) -->
     <form action="/admin/categories/add" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1.5rem; background: #F8F5F0; padding: 1.25rem; border-radius: var(--radius-md);">
-      <div style="flex: 1; min-width: 200px;">
+      <div style="flex: 1; min-width: 250px;">
         <label class="form-label">Yeni Kategori Adı</label>
         <input type="text" name="name" class="form-input" placeholder="Örn: Soğuk İçecekler" required>
       </div>
-      <div style="width: 120px;">
-        <label class="form-label">Sıra No</label>
-        <input type="number" name="display_order" class="form-input" value="<%= categories.length + 1 %>">
-      </div>
-      <button type="submit" class="btn-primary" style="height: 44px; padding: 0 1.25rem; font-size: 0.9rem;">
-        ➕ Kategori Ekle
+      <button type="submit" class="btn-primary" style="height: 44px; padding: 0 1.35rem; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Kategori Ekle
       </button>
     </form>
 
@@ -48,14 +52,18 @@
                 <td>
                   <form action="/admin/categories/edit/<%= cat.id %>" method="POST" style="display: flex; gap: 0.5rem; align-items: center;">
                     <input type="text" name="name" class="form-input" value="<%= cat.name %>" style="max-width: 220px; padding: 0.4rem 0.75rem;">
-                    <input type="number" name="display_order" class="form-input" value="<%= cat.display_order %>" style="width: 70px; padding: 0.4rem 0.5rem;">
-                    <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">💾 Kaydet</button>
+                    <input type="number" name="display_order" class="form-input" value="<%= cat.display_order %>" style="width: 70px; padding: 0.4rem 0.5rem;" title="Sıra Numarası">
+                    <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                      Kaydet
+                    </button>
                   </form>
                 </td>
                 <td>
-                  <form action="/admin/categories/delete/<%= cat.id %>" method="POST" onsubmit="return confirm('<%= cat.name %> kategorisini silmek istediğinize emin misiniz? Bu kategoriye ait ürünler de etkilenecektir.');">
-                    <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; border-color: var(--accent-red); color: var(--accent-red);">
-                      🗑️ Sil
+                  <form action="/admin/categories/delete/<%= cat.id %>" method="POST" onsubmit="return confirm('<%= cat.name %> kategorisini silmek istediğinize emin misiniz?');">
+                    <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; border-color: var(--accent-red); color: var(--accent-red); display: inline-flex; align-items: center; gap: 0.3rem;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                      Sil
                     </button>
                   </form>
                 </td>
@@ -70,7 +78,10 @@
   <!-- PRODUCTS MANAGEMENT TABLE -->
   <div class="admin-card" style="padding: 0; overflow: hidden;">
     <div style="padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
-      <h3 style="font-size: 1.25rem; color: var(--primary);">📋 Menü Ürünleri (<%= products.length %>)</h3>
+      <h3 style="font-size: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Menü Ürünleri (<%= products.length %>)
+      </h3>
     </div>
 
     <% if (products.length === 0) { %>
@@ -115,12 +126,14 @@
                 </td>
                 <td>
                   <div style="display: flex; gap: 0.5rem;">
-                    <a href="/admin/products/edit/<%= product.id %>" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.85rem;">
-                      ✏️ Düzenle
+                    <a href="/admin/products/edit/<%= product.id %>" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                      Düzenle
                     </a>
                     <form action="/admin/products/delete/<%= product.id %>" method="POST" onsubmit="return confirm('Bu ürünü silmek istediğinize emin misiniz?');" style="display: inline;">
-                      <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.85rem; border-color: var(--accent-red); color: var(--accent-red);">
-                        🗑️ Sil
+                      <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.85rem; border-color: var(--accent-red); color: var(--accent-red); display: inline-flex; align-items: center; gap: 0.3rem;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Sil
                       </button>
                     </form>
                   </div>

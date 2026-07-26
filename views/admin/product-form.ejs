@@ -3,9 +3,18 @@
 <main class="admin-container" style="max-width: 680px;">
   <div class="admin-card">
     <div style="margin-bottom: 2rem;">
-      <a href="/admin/dashboard" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600;">&larr; Panele Dön</a>
-      <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-top: 0.5rem;">
-        <%= product ? '✏️ Ürünü Düzenle' : '➕ Yeni Ürün Ekle' %>
+      <a href="/admin/dashboard" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Panele Dön
+      </a>
+      <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+        <% if (product) { %>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Ürünü Düzenle
+        <% } else { %>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Yeni Ürün Ekle
+        <% } %>
       </h2>
     </div>
 
@@ -56,7 +65,7 @@
         <% } %>
         <input type="file" id="image" name="image" class="form-input" accept="image/*">
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem;">
-          💡 Görseller otomatik olarak Cloudinary CDN'ine yüklenir ve optimize edilir.
+          Görseller otomatik olarak Cloudinary CDN'ine yüklenir ve optimize edilir.
         </p>
       </div>
 

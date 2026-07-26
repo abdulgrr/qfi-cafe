@@ -4,26 +4,80 @@
   <!-- HERO SECTION -->
   <section class="hero">
     <div class="hero-text">
-      <h1>Sıcak Bir Kahve, <span>Eşsiz Tatlar.</span></h1>
-      <p>Pendik'in kalbinde özenle seçilmiş 3. nesil kahve çekirdekleri, taze pişen boutique tatlılar ve huzur dolu atmosfer Qfi Coffee'de sizi bekliyor.</p>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #EAE4D9; color: var(--primary); padding: 0.4rem 1rem; border-radius: 99px; font-weight: 700; font-size: 0.85rem; margin-bottom: 1.25rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Pendik'in En Sevilen Butik Kafesi
+      </div>
+      <h1>Sıcak Bir Kahve, <span>Eşsiz Lezzetler.</span></h1>
+      <p>Pendik'in kalbinde özenle seçilmiş 3. nesil kahve çekirdekleri, günlük fırından taze çıkan boutique tatlılar ve huzur dolu atmosfer Qfi Cafe'de sizi bekliyor.</p>
       <div class="hero-actions">
-        <a href="/menu" class="btn-primary">☕ Lezzet Menüsü</a>
-        <a href="/contact" class="btn-outline">📍 Konum ve İletişim</a>
+        <a href="/menu" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
+          Lezzet Menüsü
+        </a>
+        <a href="/contact" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bize Ulaşın
+        </a>
       </div>
     </div>
     <div class="hero-image">
-      <div class="hero-img-box">
-        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=900&q=80" alt="Qfi Coffee Interior">
+      <div class="hero-img-box" style="position: relative;">
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=80" alt="Qfi Cafe Interior Barista">
+        <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.75rem 1.25rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 0.75rem;">
+          <div style="background: #FFF9E6; color: #D97706; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
+            4.9
+          </div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.9rem; color: var(--text-dark);">Müşteri Memnuniyeti</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">250+ Değerlendirme & Yorum</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURED HIGHLIGHTS -->
+  <!-- FEATURES HIGHLIGHTS BAR -->
+  <section style="max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      <div style="background: var(--card-bg); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); display: flex; align-items: flex-start; gap: 1.25rem;">
+        <div style="background: #E8F0EA; color: var(--primary); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+        </div>
+        <div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);">3. Nesil Kahve Çekirdekleri</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Dünyanın en nitelikli tarlalarından özenle seçilmiş %100 Arabica kahveler.</p>
+        </div>
+      </div>
+
+      <div style="background: var(--card-bg); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); display: flex; align-items: flex-start; gap: 1.25rem;">
+        <div style="background: #F5EBE6; color: var(--accent-brown); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);">Günlük Taze Fırın</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Her sabah fırınlanan taze kruvasanlar, San Sebastian ve ev yapımı tatlılar.</p>
+        </div>
+      </div>
+
+      <div style="background: var(--card-bg); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); display: flex; align-items: flex-start; gap: 1.25rem;">
+        <div style="background: #E8F0EA; color: var(--primary); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        </div>
+        <div>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);">Sıcak & Samimi Atmosfer</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Pendik'te ister çalışmak ister sohbet etmek için en huzurlu alan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS GRID -->
   <% if (typeof featuredProducts !== 'undefined' && featuredProducts.length > 0) { %>
-    <section class="product-section">
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <h2 style="font-family: var(--font-serif); font-size: 2.3rem;">Öne Çıkan Lezzetlerimiz</h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Günlük taze hazırlanan favori kahve ve tatlılarımız</p>
+    <section class="product-section" style="margin-top: 4rem;">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <h2 style="font-family: var(--font-serif); font-size: 2.4rem;">Öne Çıkan Lezzetlerimiz</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Baristalarımızın özenle hazırladığı favori kahve ve tatlılar</p>
       </div>
       <div class="product-grid">
         <% featuredProducts.forEach(product => { %>
@@ -51,23 +105,107 @@
         <% }) %>
       </div>
       <div style="text-align: center; margin-top: 3rem;">
-        <a href="/menu" class="btn-primary" style="display: inline-block;">Tüm Menüyü İncele &rarr;</a>
+        <a href="/menu" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+          Tüm Menüyü İncele
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
     </section>
   <% } %>
 
-  <!-- ABOUT & LOCATION BANNER -->
-  <section class="page-container" style="margin-top: 2rem;">
+  <!-- SPECIAL SPOTLIGHT SHOWCASE BANNER -->
+  <section style="max-width: 1200px; margin: 5rem auto; padding: 0 1.5rem;">
+    <div style="background: linear-gradient(135deg, #2E5A44 0%, #1E3F2F 100%); color: #FAF7F2; border-radius: var(--radius-xl); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: var(--shadow-lg); align-items: center;">
+      <div style="padding: 3.5rem 3rem;">
+        <div style="background: rgba(255, 255, 255, 0.15); display: inline-block; padding: 0.35rem 1rem; border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem;">
+          Günün Önerisi
+        </div>
+        <h2 style="font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.25rem;">
+          Iced Spanish Latte & San Sebastian
+        </h2>
+        <p style="color: #E2DBD0; line-height: 1.7; font-size: 1.05rem; margin-bottom: 2rem;">
+          Çifte shot zengin espresso ile kıvamlı süt buluşuyor; yanında içi akışkan, karamelize üst dokulu San Sebastian cheesecake ile eşsiz bir lezzet ikilisi sunuyor.
+        </p>
+        <a href="/menu" class="btn-primary" style="background: #FAF7F2; color: var(--primary); border: none;">
+          Menüde Keşfet &rarr;
+        </a>
+      </div>
+      <div style="height: 100%; min-height: 380px;">
+        <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80" alt="Special Dessert" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+  </section>
+
+  <!-- CAFE ATMOSPHERE PHOTO GALLERY GRID -->
+  <section style="max-width: 1200px; margin: 5rem auto; padding: 0 1.5rem;">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+      <h2 style="font-family: var(--font-serif); font-size: 2.4rem;">Qfi Cafe Atmosferi</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Sıcak ahşap dokular, taze kahve kokusu ve Pendik'te huzurlu anlar</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80" alt="Espresso Bar" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
+        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Fresh Bakery Croissant" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Pour over V60" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Cafe Seating Atmosphere" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMER REVIEWS / TESTIMONIALS -->
+  <section style="max-width: 1200px; margin: 5rem auto; padding: 0 1.5rem;">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+      <h2 style="font-family: var(--font-serif); font-size: 2.4rem;">Misafirlerimiz Ne Diyor?</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Pendik mekanımızı ziyaret eden misafirlerimizin deneyimleri</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+        <div style="color: #D97706; margin-bottom: 0.75rem; font-size: 1.1rem;">★★★★★</div>
+        <p style="color: var(--text-dark); font-style: italic; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+          "Pendik'te kahve içebileceğiniz en kaliteli mekan. Flat White muazzamdı, San Sebastian ise tam kıvamında akışkandı. Kesinlikle tavsiye ederim."
+        </p>
+        <div style="font-weight: 700; font-size: 0.9rem; color: var(--primary);">– Zeynep K.</div>
+      </div>
+
+      <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+        <div style="color: #D97706; margin-bottom: 0.75rem; font-size: 1.1rem;">★★★★★</div>
+        <p style="color: var(--text-dark); font-style: italic; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+          "Sakin, huzurlu ve tasarımı çok şık bir cafe. Bilgisayarımı alıp çalışmak için mükemmel bir ortam. Baristalar çok güler yüzlü."
+        </p>
+        <div style="font-weight: 700; font-size: 0.9rem; color: var(--primary);">– Emre B.</div>
+      </div>
+
+      <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+        <div style="color: #D97706; margin-bottom: 0.75rem; font-size: 1.1rem;">★★★★★</div>
+        <p style="color: var(--text-dark); font-style: italic; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+          "Cold brew içtiğim en iyi kafelerden biri. Tatlıları günlük ve çok taze. Pendik Sahaf Sokak'taki bu mekan vazgeçilmezimiz oldu."
+        </p>
+        <div style="font-weight: 700; font-size: 0.9rem; color: var(--primary);">– Mert T.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION CTA BANNER -->
+  <section class="page-container" style="margin-top: 4rem;">
     <div class="page-card" style="text-align: center;">
-      <h2 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 1rem; color: var(--primary);">
-        Qfi Coffee'ye Davetlisiniz
+      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 1rem; color: var(--primary);">
+        Qfi Cafe'ye Bekliyoruz
       </h2>
       <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.7;">
-        Dumlupınar, Sahaf Sokak'ta yer alan kafemizde taze kavrulmuş kahvelerimiz ve lezzetli ikramlarımız ile gününüze keyif katıyoruz.
+        Dumlupınar, Sahaf Sk No:3 D:A, Pendik/İstanbul adresinde haftanın 7 günü 09:00 - 23:30 saatleri arasında kapılarımız açık.
       </p>
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="/about" class="btn-outline">Hakkımızda Daha Fazla</a>
-        <a href="/contact" class="btn-primary">Haritada Yol Tarifi Al</a>
+        <a href="/contact" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Haritada Yol Tarifi Al
+        </a>
+        <a href="/about" class="btn-outline">Hakkımızda</a>
       </div>
     </div>
   </section>

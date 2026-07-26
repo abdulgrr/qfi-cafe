@@ -244,14 +244,25 @@ const toggleAvailability = async (req, res) => {
 };
 
 /**
- * Category Create POST
+ * Category Create POST (Automatic Display Order Assignment)
  */
 const createCategory = async (req, res) => {
   try {
-    const { name, display_order } = req.body;
+    const { name } = req.body;
     const slug = name.toLowerCase().trim().replace(/[^a-z0-9ğüşıöç]/gi, '-').replace(/-+/g, '-');
 
-    await supabase.from('categories').insert([{ name, slug, display_order: parseInt(display_order) || 0 }]);
+    // Automatically calculate next display_order from Supabase
+    const { data: maxCat } = await supabase
+      .from('categories')
+      .select('display_order')
+      .order('display_order', { ascending: false })
+      .limit(1);
+
+    const nextOrder = (maxCat && maxCat.length > 0 && typeof maxCat[0].display_order === 'number') 
+      ? maxCat[0].display_order + 1 
+      : 1;
+
+    await supabase.from('categories').insert([{ name, slug, display_order: nextOrder }]);
     res.redirect('/admin/dashboard');
   } catch (error) {
     console.error('Create category error:', error);

@@ -2,9 +2,11 @@
 
 <main>
   <div class="menu-header-box">
-    <!-- PINTEREST STYLE SEARCH BAR -->
+    <!-- PINTEREST STYLE SEARCH BAR WITH SVG SEARCH ICON -->
     <div class="search-box-container">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon" style="display: flex; align-items: center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </span>
       <input type="text" id="menu-search-input" class="search-input" placeholder="Kahve, tatlı veya içecek ara..." autocomplete="off">
     </div>
 
@@ -18,11 +20,11 @@
     </div>
   </div>
 
-  <!-- CATEGORY PILL NAVIGATION BAR (PINTEREST STYLE) -->
+  <!-- CATEGORY PILL NAVIGATION BAR -->
   <div class="category-bar-wrapper">
     <div class="category-bar">
       <button class="category-pill <%= selectedCategory === 'all' ? 'active' : '' %>" data-category="all">
-        Tümü ✨
+        Tümü
       </button>
       <% categories.forEach(cat => { %>
         <button class="category-pill <%= selectedCategory === cat.slug ? 'active' : '' %>" data-category="<%= cat.slug %>">
@@ -32,7 +34,7 @@
     </div>
   </div>
 
-  <!-- PINTEREST STYLE PRODUCT GRID -->
+  <!-- PRODUCT GRID -->
   <section class="product-section">
     <% if (products.length === 0) { %>
       <div style="text-align: center; padding: 4rem 1rem; background: var(--card-bg); border-radius: var(--radius-xl); border: 1px solid var(--border-light);">

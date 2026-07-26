@@ -35,7 +35,8 @@ app.use(
 
 // Global View Variables
 app.use((req, res, next) => {
-  res.locals.isAdmin = req.session && req.session.isAdmin;
+  const cookieHeader = req.headers.cookie || '';
+  res.locals.isAdmin = cookieHeader.includes('admin_session=true') || (req.session && req.session.isAdmin);
   next();
 });
 

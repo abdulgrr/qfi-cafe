@@ -29,8 +29,12 @@ const postLogin = async (req, res) => {
   const isValidPass = password === envPassword || password === 'cafe_admin_password_2026' || password === 'admin';
 
   if (isValidUser && isValidPass) {
-    req.session.isAdmin = true;
-    req.session.adminUser = username;
+    if (req.session) {
+      req.session.isAdmin = true;
+      req.session.adminUser = username;
+    }
+    // Set HttpOnly Cookie for Vercel Serverless Stateless Session
+    res.setHeader('Set-Cookie', 'admin_session=true; Path=/; HttpOnly; Max-Age=86400; SameSite=Lax');
     return res.redirect('/admin/dashboard');
   }
 
@@ -44,9 +48,11 @@ const postLogin = async (req, res) => {
  * Admin Logout
  */
 const logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/admin/login');
-  });
+  res.setHeader('Set-Cookie', 'admin_session=; Path=/; HttpOnly; Max-Age=0; SameSite=Lax');
+  if (req.session) {
+    req.session.destroy(() => {});
+  }
+  res.redirect('/admin/login');
 };
 
 /**

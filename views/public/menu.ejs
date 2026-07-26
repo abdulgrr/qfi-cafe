@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<main>
+  <div class="menu-header">
+    <h1>📱 Dijital Menü</h1>
+    <p style="color: var(--text-muted);">Tüm kahvelerimiz taze çekirdeklerden anlık demlenmekte, tatlılarımız günlük fırınlanmaktadır.</p>
+  </div>
+
+  <!-- CATEGORY PILL NAVIGATION BAR -->
+  <div class="category-bar-wrapper">
+    <div class="category-bar">
+      <button class="category-pill <%= selectedCategory === 'all' ? 'active' : '' %>" data-category="all">
+        Tümü ✨
+      </button>
+      <% categories.forEach(cat => { %>
+        <button class="category-pill <%= selectedCategory === cat.slug ? 'active' : '' %>" data-category="<%= cat.slug %>">
+          <%= cat.name %>
+        </button>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <section class="product-section">
+    <% if (products.length === 0) { %>
+      <div style="text-align: center; padding: 4rem 1rem;">
+        <p style="font-size: 1.2rem; color: var(--text-muted);">Henüz menüye ürün eklenmemiş.</p>
+      </div>
+    <% } else { %>
+      <div class="product-grid">
+        <% products.forEach(product => { %>
+          <% const catSlug = product.categories ? product.categories.slug : ''; %>
+          <div class="product-card" data-category-slug="<%= catSlug %>">
+            <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img" loading="lazy">
+            <div class="product-details">
+              <h3 class="product-name"><%= product.name %></h3>
+              <p class="product-desc"><%= product.description || 'Özel hazırlanmış lezzet.' %></p>
+              <div class="product-footer">
+                <span class="product-price">₺<%= parseFloat(product.price).toFixed(2) %></span>
+                <span class="status-badge <%= product.is_available ? 'available' : 'out' %>">
+                  <%= product.is_available ? 'Mevcut' : 'Tükendi' %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

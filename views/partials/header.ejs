@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Qfi Coffee & Bakery' %></title>
+  <meta name="description" content="Taze kavrulmuş kahveler, enfes tatlılar ve boutique cafe atmosferi. QR Menümüzü hemen inceleyin!">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        ☕ Qfi <span>Coffee</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Anasayfa</a></li>
+        <li><a href="/menu" class="nav-link">QR Menü</a></li>
+        <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+          <li><a href="/admin/dashboard" class="nav-link" style="color: var(--primary);">Yönetim Paneli</a></li>
+          <li><a href="/admin/logout" class="nav-link" style="color: var(--accent-red);">Çıkış</a></li>
+        <% } %>
+        <li>
+          <a href="/menu" class="btn-qr-menu">
+            📱 Menüyü Gör
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>

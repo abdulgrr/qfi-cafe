@@ -1,0 +1,74 @@
+<%- include('../partials/header') %>
+
+<main>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Sıcak Bir Kahve, <span>Eşsiz Tatlar.</span></h1>
+      <p>Özenle seçilmiş 3. nesil kahve çekirdekleri, günlük fırından taze çıkan boutique tatlılar ve huzur dolu atmosfer Qfi Coffee'de sizi bekliyor.</p>
+      <div class="hero-actions">
+        <a href="/menu" class="btn-primary">📱 Dijital QR Menü</a>
+        <a href="#location" class="btn-outline">📍 Konum ve İletişim</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-img-box">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=900&q=80" alt="Boutique Cafe Interior">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED HIGHLIGHTS -->
+  <% if (typeof featuredProducts !== 'undefined' && featuredProducts.length > 0) { %>
+    <section class="product-section">
+      <h2 class="section-title">Öne Çıkan Lezzetlerimiz</h2>
+      <div class="product-grid">
+        <% featuredProducts.forEach(product => { %>
+          <div class="product-card">
+            <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img" loading="lazy">
+            <div class="product-details">
+              <h3 class="product-name"><%= product.name %></h3>
+              <p class="product-desc"><%= product.description %></p>
+              <div class="product-footer">
+                <span class="product-price">₺<%= parseFloat(product.price).toFixed(2) %></span>
+                <span class="status-badge <%= product.is_available ? 'available' : 'out' %>">
+                  <%= product.is_available ? 'Mevcut' : 'Tükendi' %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <div style="text-align: center; margin-top: 2.5rem;">
+        <a href="/menu" class="btn-primary" style="display: inline-block;">Tüm Menüyü İncele &rarr;</a>
+      </div>
+    </section>
+  <% } %>
+
+  <!-- INFO & LOCATION SECTION -->
+  <section class="info-section" id="location">
+    <h2 class="section-title">Bizi Ziyaret Edin</h2>
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-card-icon">📍</div>
+        <h3>Konumumuz</h3>
+        <p>Kadıköy Moda Caddesi No: 42, İstanbul</p>
+        <a href="https://maps.google.com" target="_blank" style="color: var(--primary); font-weight: 700; font-size: 0.9rem; display: inline-block; margin-top: 0.5rem;">Haritada Gör &rarr;</a>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">⏰</div>
+        <h3>Çalışma Saatleri</h3>
+        <p>Hafta İçi: 08:30 - 23:00</p>
+        <p>Hafta Sonu: 09:00 - 00:00</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📞</div>
+        <h3>İletişim & Rezervasyon</h3>
+        <p>+90 (212) 555 01 99</p>
+        <p>hello@qficoffee.com</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

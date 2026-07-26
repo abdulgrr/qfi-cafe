@@ -1,20 +1,19 @@
 const supabase = require('../config/supabase');
 
 /**
- * Render Public Homepage
+ * Render Homepage
  */
 const getHomePage = async (req, res) => {
   try {
-    // Fetch top 4 featured products for home highlight
     const { data: featuredProducts } = await supabase
       .from('products')
       .select('*, categories(name)')
       .eq('is_available', true)
       .order('display_order', { ascending: true })
-      .limit(4);
+      .limit(6);
 
     res.render('public/index', {
-      title: 'Qfi Coffee & Bakery | Boutique Cafe & QR Menü',
+      title: 'Qfi Coffee & Bakery | Lezzet & Kahve Deneyimi',
       featuredProducts: featuredProducts || []
     });
   } catch (error) {
@@ -27,30 +26,24 @@ const getHomePage = async (req, res) => {
 };
 
 /**
- * Render Public Interactive QR Menu Page
+ * Render Interactive Menu Page (Pinterest Style UI)
  */
 const getMenuPage = async (req, res) => {
   try {
-    // Fetch categories ordered by display_order
-    const { data: categories, error: catErr } = await supabase
+    const { data: categories } = await supabase
       .from('categories')
       .select('*')
       .order('display_order', { ascending: true });
 
-    if (catErr) throw catErr;
-
-    // Fetch active products
-    const { data: products, error: prodErr } = await supabase
+    const { data: products } = await supabase
       .from('products')
       .select('*, categories(id, name, slug)')
       .order('display_order', { ascending: true });
 
-    if (prodErr) throw prodErr;
-
     const selectedCategory = req.query.category || 'all';
 
     res.render('public/menu', {
-      title: 'QR Menü | Qfi Coffee',
+      title: 'Kahve & Lezzet Menüsü | Qfi Coffee',
       categories: categories || [],
       products: products || [],
       selectedCategory
@@ -58,7 +51,7 @@ const getMenuPage = async (req, res) => {
   } catch (error) {
     console.error('Menu controller error:', error);
     res.status(500).render('public/menu', {
-      title: 'QR Menü',
+      title: 'Menü | Qfi Coffee',
       categories: [],
       products: [],
       selectedCategory: 'all',
@@ -67,7 +60,34 @@ const getMenuPage = async (req, res) => {
   }
 };
 
+/**
+ * Render About Us Page
+ */
+const getAboutPage = (req, res) => {
+  res.render('public/about', {
+    title: 'Hakkımızda | Qfi Coffee & Bakery'
+  });
+};
+
+/**
+ * Render Contact & Location Page (Real Qfi Cafe Pendik Data)
+ */
+const getContactPage = (req, res) => {
+  res.render('public/contact', {
+    title: 'Bize Ulaşın & Konum | Qfi Coffee',
+    cafeInfo: {
+      address: 'Dumlupınar, Sahaf Sk. No:3 D:A, 34896 Pendik / İstanbul',
+      phone: '0501 558 09 58',
+      phoneRaw: '05015580958',
+      hours: 'Her Gün: 09:00 - 23:30',
+      mapsUrl: 'https://maps.app.goo.gl/a2nsSuwbPQ1amwEe7'
+    }
+  });
+};
+
 module.exports = {
   getHomePage,
-  getMenuPage
+  getMenuPage,
+  getAboutPage,
+  getContactPage
 };

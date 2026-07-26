@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const publicController = require('../controllers/publicController');
 
-// Homepage
+// Navigation Routes
 router.get('/', publicController.getHomePage);
-
-// Public QR Menu
 router.get('/menu', publicController.getMenuPage);
+router.get('/about', publicController.getAboutPage);
+router.get('/contact', publicController.getContactPage);
 
 module.exports = router;

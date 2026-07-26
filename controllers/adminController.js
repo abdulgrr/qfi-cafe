@@ -249,12 +249,43 @@ const toggleAvailability = async (req, res) => {
 const createCategory = async (req, res) => {
   try {
     const { name, display_order } = req.body;
-    const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+    const slug = name.toLowerCase().trim().replace(/[^a-z0-9ğüşıöç]/gi, '-').replace(/-+/g, '-');
 
     await supabase.from('categories').insert([{ name, slug, display_order: parseInt(display_order) || 0 }]);
     res.redirect('/admin/dashboard');
   } catch (error) {
     console.error('Create category error:', error);
+    res.redirect('/admin/dashboard');
+  }
+};
+
+/**
+ * Category Update POST
+ */
+const updateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, display_order } = req.body;
+    const slug = name.toLowerCase().trim().replace(/[^a-z0-9ğüşıöç]/gi, '-').replace(/-+/g, '-');
+
+    await supabase.from('categories').update({ name, slug, display_order: parseInt(display_order) || 0 }).eq('id', id);
+    res.redirect('/admin/dashboard');
+  } catch (error) {
+    console.error('Update category error:', error);
+    res.redirect('/admin/dashboard');
+  }
+};
+
+/**
+ * Category Delete POST
+ */
+const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await supabase.from('categories').delete().eq('id', id);
+    res.redirect('/admin/dashboard');
+  } catch (error) {
+    console.error('Delete category error:', error);
     res.redirect('/admin/dashboard');
   }
 };
@@ -270,5 +301,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
   toggleAvailability,
-  createCategory
+  createCategory,
+  updateCategory,
+  deleteCategory
 };

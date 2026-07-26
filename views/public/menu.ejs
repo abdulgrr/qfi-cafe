@@ -1,12 +1,24 @@
 <%- include('../partials/header') %>
 
 <main>
-  <div class="menu-header">
-    <h1>📱 Dijital Menü</h1>
-    <p style="color: var(--text-muted);">Tüm kahvelerimiz taze çekirdeklerden anlık demlenmekte, tatlılarımız günlük fırınlanmaktadır.</p>
+  <div class="menu-header-box">
+    <!-- PINTEREST STYLE SEARCH BAR -->
+    <div class="search-box-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="menu-search-input" class="search-input" placeholder="Kahve, tatlı veya içecek ara..." autocomplete="off">
+    </div>
+
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <h1 style="font-family: var(--font-serif); font-size: 2.4rem; color: var(--text-dark); margin-bottom: 0.4rem;">
+        Kahve & Lezzet Menüsü
+      </h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Taze demlenen kahvelerimiz ve günlük hazırlanan lezzetlerimiz
+      </p>
+    </div>
   </div>
 
-  <!-- CATEGORY PILL NAVIGATION BAR -->
+  <!-- CATEGORY PILL NAVIGATION BAR (PINTEREST STYLE) -->
   <div class="category-bar-wrapper">
     <div class="category-bar">
       <button class="category-pill <%= selectedCategory === 'all' ? 'active' : '' %>" data-category="all">
@@ -20,23 +32,34 @@
     </div>
   </div>
 
-  <!-- PRODUCT GRID -->
+  <!-- PINTEREST STYLE PRODUCT GRID -->
   <section class="product-section">
     <% if (products.length === 0) { %>
-      <div style="text-align: center; padding: 4rem 1rem;">
+      <div style="text-align: center; padding: 4rem 1rem; background: var(--card-bg); border-radius: var(--radius-xl); border: 1px solid var(--border-light);">
         <p style="font-size: 1.2rem; color: var(--text-muted);">Henüz menüye ürün eklenmemiş.</p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">Admin panelinden yeni ürünler ekleyebilirsiniz.</p>
       </div>
     <% } else { %>
-      <div class="product-grid">
+      <div class="product-grid" id="product-grid-container">
         <% products.forEach(product => { %>
           <% const catSlug = product.categories ? product.categories.slug : ''; %>
-          <div class="product-card" data-category-slug="<%= catSlug %>">
-            <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img" loading="lazy">
+          <div class="product-card" data-category-slug="<%= catSlug %>" data-product-name="<%= product.name.toLowerCase() %>" data-product-desc="<%= (product.description || '').toLowerCase() %>">
+            <div class="product-img-wrapper">
+              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img" loading="lazy">
+            </div>
             <div class="product-details">
-              <h3 class="product-name"><%= product.name %></h3>
-              <p class="product-desc"><%= product.description || 'Özel hazırlanmış lezzet.' %></p>
-              <div class="product-footer">
+              <div class="product-title-row">
+                <h3 class="product-name"><%= product.name %></h3>
                 <span class="product-price">₺<%= parseFloat(product.price).toFixed(2) %></span>
+              </div>
+              <p class="product-desc"><%= product.description || 'Özel demlenmiş lezzet.' %></p>
+              
+              <div class="product-size-row">
+                <span class="size-pill">Taze Demleme</span>
+                <span class="size-pill">Standart</span>
+              </div>
+
+              <div class="product-card-footer">
                 <span class="status-badge <%= product.is_available ? 'available' : 'out' %>">
                   <%= product.is_available ? 'Mevcut' : 'Tükendi' %>
                 </span>

@@ -3,36 +3,74 @@
 <main class="admin-container">
   <div class="admin-header">
     <div>
-      <h1 style="font-family: var(--font-serif); font-size: 2.2rem;">☕ Yönetim Paneli</h1>
-      <p style="color: var(--text-muted);">Menü ürünlerini, kategorileri ve stok durumlarını buradan yönetebilirsiniz.</p>
+      <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--text-dark);">☕ Qfi Coffee - Yönetim Paneli</h1>
+      <p style="color: var(--text-muted);">Menü ürünlerini ve kategorilerini buradan kolayca yönetebilirsiniz.</p>
     </div>
     <a href="/admin/products/add" class="btn-primary">
       ➕ Yeni Ürün Ekle
     </a>
   </div>
 
-  <!-- CATEGORY QUICK MANAGEMENT -->
+  <!-- CATEGORY MANAGEMENT CARD -->
   <div class="admin-card">
-    <h3 style="margin-bottom: 1rem; font-size: 1.15rem;">📁 Kategori Ekle</h3>
-    <form action="/admin/categories/add" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end;">
+    <h3 style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--primary);">📁 Kategori Yönetimi</h3>
+    
+    <!-- Add Category Form -->
+    <form action="/admin/categories/add" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1.5rem; background: #F8F5F0; padding: 1.25rem; border-radius: var(--radius-md);">
       <div style="flex: 1; min-width: 200px;">
-        <label class="form-label">Kategori Adı</label>
+        <label class="form-label">Yeni Kategori Adı</label>
         <input type="text" name="name" class="form-input" placeholder="Örn: Soğuk İçecekler" required>
       </div>
       <div style="width: 120px;">
         <label class="form-label">Sıra No</label>
         <input type="number" name="display_order" class="form-input" value="<%= categories.length + 1 %>">
       </div>
-      <button type="submit" class="btn-outline" style="height: 44px; padding: 0 1.25rem;">
-        Ekle
+      <button type="submit" class="btn-primary" style="height: 44px; padding: 0 1.25rem; font-size: 0.9rem;">
+        ➕ Kategori Ekle
       </button>
     </form>
+
+    <!-- Categories List Table -->
+    <% if (categories.length > 0) { %>
+      <div style="overflow-x: auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Sıra</th>
+              <th>Kategori Adı</th>
+              <th>İşlemler</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% categories.forEach(cat => { %>
+              <tr>
+                <td style="font-weight: 700; width: 80px;"><%= cat.display_order %></td>
+                <td>
+                  <form action="/admin/categories/edit/<%= cat.id %>" method="POST" style="display: flex; gap: 0.5rem; align-items: center;">
+                    <input type="text" name="name" class="form-input" value="<%= cat.name %>" style="max-width: 220px; padding: 0.4rem 0.75rem;">
+                    <input type="number" name="display_order" class="form-input" value="<%= cat.display_order %>" style="width: 70px; padding: 0.4rem 0.5rem;">
+                    <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">💾 Kaydet</button>
+                  </form>
+                </td>
+                <td>
+                  <form action="/admin/categories/delete/<%= cat.id %>" method="POST" onsubmit="return confirm('<%= cat.name %> kategorisini silmek istediğinize emin misiniz? Bu kategoriye ait ürünler de etkilenecektir.');">
+                    <button type="submit" class="btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; border-color: var(--accent-red); color: var(--accent-red);">
+                      🗑️ Sil
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
   </div>
 
   <!-- PRODUCTS MANAGEMENT TABLE -->
   <div class="admin-card" style="padding: 0; overflow: hidden;">
     <div style="padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
-      <h3 style="font-size: 1.25rem;">📋 Menü Ürünleri (<%= products.length %>)</h3>
+      <h3 style="font-size: 1.25rem; color: var(--primary);">📋 Menü Ürünleri (<%= products.length %>)</h3>
     </div>
 
     <% if (products.length === 0) { %>
@@ -60,14 +98,14 @@
                 </td>
                 <td>
                   <strong><%= product.name %></strong>
-                  <div style="font-size: 0.8rem; color: var(--text-muted);"><%= product.description ? product.description.substring(0, 40) + '...' : '' %></div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);"><%= product.description ? product.description.substring(0, 45) + '...' : '' %></div>
                 </td>
                 <td>
-                  <span style="background: #F3F4F6; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.85rem;">
+                  <span style="background: #F3EFEA; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">
                     <%= product.categories ? product.categories.name : 'Genel' %>
                   </span>
                 </td>
-                <td style="font-weight: 700; color: var(--primary);">
+                <td style="font-weight: 800; color: var(--accent-brown);">
                   ₺<%= parseFloat(product.price).toFixed(2) %>
                 </td>
                 <td>

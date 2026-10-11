@@ -11,7 +11,7 @@ const getLoginPage = (req, res) => {
     return res.redirect('/admin/dashboard');
   }
   res.render('admin/login', {
-    title: 'Admin Girişi | Qfi Coffee',
+    title: 'Admin Girişi | Qfi Cafe',
     error: null
   });
 };
@@ -40,7 +40,7 @@ const postLogin = async (req, res) => {
   }
 
   res.render('admin/login', {
-    title: 'Admin Girişi | Qfi Coffee',
+    title: 'Admin Girişi | Qfi Cafe',
     error: 'Kullanıcı adı veya şifre hatalı!'
   });
 };
@@ -72,7 +72,7 @@ const getDashboard = async (req, res) => {
       .order('display_order', { ascending: true });
 
     res.render('admin/dashboard', {
-      title: 'Yönetim Paneli | Qfi Coffee',
+      title: 'Yönetim Paneli | Qfi Cafe',
       products: products || [],
       categories: categories || []
     });

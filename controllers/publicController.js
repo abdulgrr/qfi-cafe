@@ -74,14 +74,7 @@ const getAboutPage = (req, res) => {
  */
 const getContactPage = (req, res) => {
   res.render('public/contact', {
-    title: 'Bize Ulaşın & Konum | Qfi Cafe',
-    cafeInfo: {
-      address: 'Dumlupınar, Sahaf Sk No:3 D:A, 34000 Pendik/İstanbul',
-      phone: '0501 558 09 58',
-      phoneRaw: '05015580958',
-      hours: 'Her Gün: 09:00 - 23:30',
-      mapsUrl: 'https://maps.app.goo.gl/a2nsSuwbPQ1amwEe7'
-    }
+    title: 'Bize Ulaşın & Konum | Qfi Cafe'
   });
 };
 

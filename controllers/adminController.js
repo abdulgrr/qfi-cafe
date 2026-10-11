@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const supabase = require('../config/supabase');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../config/cloudinary');
+const settingsService = require('../services/settingsService');
 
 /**
  * Render Admin Login Page
@@ -301,6 +302,49 @@ const deleteCategory = async (req, res) => {
   }
 };
 
+/**
+ * Render Site Settings Page
+ */
+const getSettingsPage = async (req, res) => {
+  try {
+    const settings = await settingsService.getSettings();
+    const isSaved = req.query.saved === 'true';
+    res.render('admin/settings', {
+      title: 'Site İçeriği & Ayarlar | Qfi Cafe',
+      settings,
+      isSaved,
+      error: null
+    });
+  } catch (error) {
+    console.error('Settings page error:', error);
+    res.render('admin/settings', {
+      title: 'Site İçeriği & Ayarlar | Qfi Cafe',
+      settings: settingsService.defaultSettings,
+      isSaved: false,
+      error: 'Ayarlar yüklenirken bir hata oluştu.'
+    });
+  }
+};
+
+/**
+ * Handle Settings Update POST
+ */
+const updateSiteSettings = async (req, res) => {
+  try {
+    await settingsService.updateSettings(req.body, req.files);
+    res.redirect('/admin/settings?saved=true');
+  } catch (error) {
+    console.error('Settings update error:', error);
+    const settings = await settingsService.getSettings();
+    res.render('admin/settings', {
+      title: 'Site İçeriği & Ayarlar | Qfi Cafe',
+      settings,
+      isSaved: false,
+      error: 'Ayarlar kaydedilirken hata oluştu: ' + error.message
+    });
+  }
+};
+
 module.exports = {
   getLoginPage,
   postLogin,
@@ -314,5 +358,8 @@ module.exports = {
   toggleAvailability,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getSettingsPage,
+  updateSiteSettings
 };
+

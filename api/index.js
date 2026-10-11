@@ -33,10 +33,36 @@ app.use(
   })
 );
 
-// Global View Variables
-app.use((req, res, next) => {
+const settingsService = require('../services/settingsService');
+
+// Global View Variables & Settings
+app.use(async (req, res, next) => {
   const cookieHeader = req.headers.cookie || '';
   res.locals.isAdmin = cookieHeader.includes('admin_session=true') || (req.session && req.session.isAdmin);
+
+  try {
+    const settings = await settingsService.getSettings();
+    res.locals.settings = settings;
+    res.locals.cafeInfo = {
+      address: settings.address,
+      phone: settings.phone,
+      phoneRaw: settings.phone_raw || settings.phone.replace(/\D/g, ''),
+      hours: settings.working_hours,
+      mapsUrl: settings.maps_url,
+      instagramUrl: settings.instagram_url
+    };
+  } catch (err) {
+    console.error('Settings middleware error:', err);
+    res.locals.settings = settingsService.defaultSettings;
+    res.locals.cafeInfo = {
+      address: 'Dumlupınar, Sahaf Sk No:3 D:A, 34000 Pendik/İstanbul',
+      phone: '0501 558 09 58',
+      phoneRaw: '05015580958',
+      hours: 'Her Gün: 09:00 - 23:30',
+      mapsUrl: 'https://maps.app.goo.gl/a2nsSuwbPQ1amwEe7',
+      instagramUrl: 'https://instagram.com/'
+    };
+  }
   next();
 });
 
@@ -47,7 +73,7 @@ app.use('/admin', adminRoutes);
 // 404 Handler
 app.use((req, res) => {
   res.status(404).render('public/index', {
-    title: 'Sayfa Bulunamadı | Qfi Coffee',
+    title: 'Sayfa Bulunamadı | Qfi Cafe',
     featuredProducts: []
   });
 });

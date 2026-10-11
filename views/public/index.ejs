@@ -6,10 +6,10 @@
     <div class="hero-text">
       <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #EAE4D9; color: var(--primary); padding: 0.4rem 1rem; border-radius: 99px; font-weight: 700; font-size: 0.85rem; margin-bottom: 1.25rem;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Pendik'in En Sevilen Butik Kafesi
+        <%= settings.hero_badge || "Pendik'in En Sevilen Butik Kafesi" %>
       </div>
-      <h1>Sıcak Bir Kahve, <span>Eşsiz Lezzetler.</span></h1>
-      <p>Pendik'in kalbinde özenle seçilmiş 3. nesil kahve çekirdekleri, günlük fırından taze çıkan boutique tatlılar ve huzur dolu atmosfer Qfi Cafe'de sizi bekliyor.</p>
+      <h1><%= settings.hero_title || 'Sıcak Bir Kahve, Eşsiz Lezzetler.' %></h1>
+      <p><%= settings.hero_subtitle %></p>
       <div class="hero-actions">
         <a href="/menu" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
@@ -23,7 +23,7 @@
     </div>
     <div class="hero-image">
       <div class="hero-img-box" style="position: relative;">
-        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=80" alt="Qfi Cafe Interior Barista">
+        <img src="<%= settings.hero_image || 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=80' %>" alt="<%= settings.cafe_name || 'Qfi Cafe' %>">
         <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.75rem 1.25rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 0.75rem;">
           <div style="background: #FFF9E6; color: #D97706; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
             4.9
@@ -45,8 +45,8 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
         </div>
         <div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);">3. Nesil Kahve Çekirdekleri</h4>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Dünyanın en nitelikli tarlalarından özenle seçilmiş %100 Arabica kahveler.</p>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);"><%= settings.feature_1_title %></h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;"><%= settings.feature_1_desc %></p>
         </div>
       </div>
 
@@ -55,8 +55,8 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
         <div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);">Günlük Taze Fırın</h4>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Her sabah fırınlanan taze kruvasanlar, San Sebastian ve ev yapımı tatlılar.</p>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);"><%= settings.feature_2_title %></h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;"><%= settings.feature_2_desc %></p>
         </div>
       </div>
 
@@ -65,8 +65,8 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
         </div>
         <div>
-          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);">Sıcak & Samimi Atmosfer</h4>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Pendik'te ister çalışmak ister sohbet etmek için en huzurlu alan.</p>
+          <h4 style="font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--text-dark);"><%= settings.feature_3_title %></h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;"><%= settings.feature_3_desc %></p>
         </div>
       </div>
     </div>
@@ -118,20 +118,20 @@
     <div style="background: linear-gradient(135deg, #2E5A44 0%, #1E3F2F 100%); color: #FAF7F2; border-radius: var(--radius-xl); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: var(--shadow-lg); align-items: center;">
       <div style="padding: 3.5rem 3rem;">
         <div style="background: rgba(255, 255, 255, 0.15); display: inline-block; padding: 0.35rem 1rem; border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem;">
-          Günün Önerisi
+          <%= settings.spotlight_badge || 'Günün Önerisi' %>
         </div>
         <h2 style="font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.25rem;">
-          Iced Spanish Latte & San Sebastian
+          <%= settings.spotlight_title || 'Iced Spanish Latte & San Sebastian' %>
         </h2>
         <p style="color: #E2DBD0; line-height: 1.7; font-size: 1.05rem; margin-bottom: 2rem;">
-          Çifte shot zengin espresso ile kıvamlı süt buluşuyor; yanında içi akışkan, karamelize üst dokulu San Sebastian cheesecake ile eşsiz bir lezzet ikilisi sunuyor.
+          <%= settings.spotlight_description %>
         </p>
         <a href="/menu" class="btn-primary" style="background: #FAF7F2; color: var(--primary); border: none;">
           Menüde Keşfet &rarr;
         </a>
       </div>
       <div style="height: 100%; min-height: 380px;">
-        <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80" alt="Special Dessert" style="width: 100%; height: 100%; object-fit: cover;">
+        <img src="<%= settings.spotlight_image || 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80' %>" alt="<%= settings.spotlight_title %>" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
     </div>
   </section>

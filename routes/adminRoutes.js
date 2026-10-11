@@ -29,4 +29,17 @@ router.post('/categories/add', adminController.createCategory);
 router.post('/categories/edit/:id', adminController.updateCategory);
 router.post('/categories/delete/:id', adminController.deleteCategory);
 
+// Site Content & CMS Settings
+router.get('/settings', adminController.getSettingsPage);
+router.post(
+  '/settings',
+  upload.fields([
+    { name: 'hero_image', maxCount: 1 },
+    { name: 'spotlight_image', maxCount: 1 },
+    { name: 'about_image_1', maxCount: 1 },
+    { name: 'about_image_2', maxCount: 1 }
+  ]),
+  adminController.updateSiteSettings
+);
+
 module.exports = router;

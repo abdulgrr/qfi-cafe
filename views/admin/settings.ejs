@@ -1,0 +1,347 @@
+<%- include('../partials/header') %>
+
+<main class="admin-container">
+  <!-- ADMIN NAVIGATION BAR -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--text-dark); display: flex; align-items: center; gap: 0.6rem;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Site İçeriği & Genel Ayarlar
+      </h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">
+        Kod yazmadan sitedeki tüm başlıkları, açıklamaları, çalışma saatlerini ve fotoğrafları buradan güncelleyebilirsiniz.
+      </p>
+    </div>
+
+    <!-- TABS -->
+    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+      <a href="/admin/dashboard" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.1rem; font-size: 0.9rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Menü & Kategoriler
+      </a>
+      <a href="/" target="_blank" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.1rem; font-size: 0.9rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Siteyi Görüntüle
+      </a>
+      <a href="/admin/logout" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.1rem; font-size: 0.9rem; color: var(--accent-red); border-color: var(--accent-red);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Çıkış Yap
+      </a>
+    </div>
+  </div>
+
+  <!-- SUCCESS / ERROR ALERTS -->
+  <% if (typeof isSaved !== 'undefined' && isSaved) { %>
+    <div style="background: #E8F5E9; border: 1px solid #A5D6A7; color: #2E7D32; padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <div>
+        <strong>Tebrikler!</strong> Tüm ayarlar ve içerikler başarıyla kaydedildi. Değişiklikler canlı sitede anında aktif oldu.
+      </div>
+    </div>
+  <% } %>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div style="background: #FFEBEE; border: 1px solid #FFCDD2; color: #C62828; padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div><%= error %></div>
+    </div>
+  <% } %>
+
+  <!-- MAIN CMS FORM -->
+  <form action="/admin/settings" method="POST" enctype="multipart/form-data">
+    
+    <!-- SECTION 1: GENEL KAFE & İLETİŞİM BİLGİLERİ -->
+    <div class="admin-card" style="margin-bottom: 2rem;">
+      <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        1. Kafe İletişim & Konum Bilgileri
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Bu bilgiler sitenin alt kısmında (footer) ve "İletişim" sayfasında otomatik olarak güncellenir.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        <div class="form-group">
+          <label class="form-label">Kafe İsmi</label>
+          <input type="text" name="cafe_name" class="form-input" value="<%= settings.cafe_name || 'Qfi Cafe' %>" required>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Sitenin üstünde ve altındaki marka adı.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Telefon Numarası</label>
+          <input type="text" name="phone" class="form-input" value="<%= settings.phone || '0501 558 09 58' %>" required>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Müşterilerin arayabileceği doğrudan telefon.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Çalışma Saatleri</label>
+          <input type="text" name="working_hours" class="form-input" value="<%= settings.working_hours || 'Her Gün: 09:00 - 23:30' %>" required>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Örnek: Her Gün: 09:00 - 23:30</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Instagram Bağlantısı / Kullanıcı Adı</label>
+          <input type="text" name="instagram_url" class="form-input" value="<%= settings.instagram_url || 'https://instagram.com/' %>">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Kafenin Instagram profil linki.</span>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 0.5rem;">
+        <label class="form-label">Açık Adres</label>
+        <textarea name="address" class="form-textarea" rows="2" required><%= settings.address || 'Dumlupınar, Sahaf Sk No:3 D:A, 34000 Pendik/İstanbul' %></textarea>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Müşterilere gösterilecek tam dükkan adresi.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Google Haritalar (Maps) Yol Tarifi Linki</label>
+        <input type="text" name="maps_url" class="form-input" value="<%= settings.maps_url || 'https://maps.app.goo.gl/a2nsSuwbPQ1amwEe7' %>">
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Tıklandığında Google Haritalar'da yol tarifi açılacak link.</span>
+      </div>
+    </div>
+
+    <!-- SECTION 2: ANA SAYFA KAPAK (HERO) ALANI -->
+    <div class="admin-card" style="margin-bottom: 2rem;">
+      <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        2. Ana Sayfa Kapak (Hero) Başlığı & Görseli
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Ziyaretçiler siteye girdiğinde karşılarına çıkan ilk karşılama alanı.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        <div class="form-group">
+          <label class="form-label">Üst Rozet Metni</label>
+          <input type="text" name="hero_badge" class="form-input" value="<%= settings.hero_badge || "Pendik'in En Sevilen Butik Kafesi" %>">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Başlığın hemen üstündeki küçük etiket yazısı.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ana Manşet Başlığı</label>
+          <input type="text" name="hero_title" class="form-input" value="<%= settings.hero_title || 'Sıcak Bir Kahve, Eşsiz Lezzetler.' %>" required>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Sitenin en büyük vurucu başlığı.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Alt Açıklama Metni</label>
+        <textarea name="hero_subtitle" class="form-textarea" rows="3"><%= settings.hero_subtitle %></textarea>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Başlığın altındaki karşılama ve tanıtım paragrafı.</span>
+      </div>
+
+      <!-- Hero Image Uploader & Preview -->
+      <div class="form-group" style="background: #F8F5F0; padding: 1.25rem; border-radius: var(--radius-md); border: 1px dashed var(--border-light);">
+        <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+          <span>Ana Kapak Fotoğrafı</span>
+          <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-muted);">İsteğe bağlı: Değiştirmek istemiyorsanız boş bırakın.</span>
+        </label>
+        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+          <div style="width: 160px; height: 110px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-light); background: #eee; flex-shrink: 0;">
+            <img id="preview_hero_image" src="<%= settings.hero_image %>" alt="Hero Preview" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <input type="file" name="hero_image" class="form-input" accept="image/*" onchange="previewFile(this, 'preview_hero_image')">
+            <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.35rem;">
+              Bilgisayarınızdan veya telefonunuzdan dükkan içi ya da kahve görseli seçin.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: 3'LÜ ÖNE ÇIKAN ÖZELLİK KARTLARI -->
+    <div class="admin-card" style="margin-bottom: 2rem;">
+      <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        3. Ana Sayfa Öne Çıkan Özellik Kartları (3 Adet)
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Kafeyi rakiplerinden ayıran 3 temel özelliği buradan özelleştirebilirsiniz.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+        <!-- Card 1 -->
+        <div style="background: #FAF8F5; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+          <div style="font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">1. Özellik Kartı</div>
+          <div class="form-group">
+            <label class="form-label">Başlık</label>
+            <input type="text" name="feature_1_title" class="form-input" value="<%= settings.feature_1_title %>">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">Açıklama</label>
+            <textarea name="feature_1_desc" class="form-textarea" rows="2"><%= settings.feature_1_desc %></textarea>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="background: #FAF8F5; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+          <div style="font-weight: 700; color: var(--accent-brown); margin-bottom: 0.75rem;">2. Özellik Kartı</div>
+          <div class="form-group">
+            <label class="form-label">Başlık</label>
+            <input type="text" name="feature_2_title" class="form-input" value="<%= settings.feature_2_title %>">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">Açıklama</label>
+            <textarea name="feature_2_desc" class="form-textarea" rows="2"><%= settings.feature_2_desc %></textarea>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div style="background: #FAF8F5; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+          <div style="font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">3. Özellik Kartı</div>
+          <div class="form-group">
+            <label class="form-label">Başlık</label>
+            <input type="text" name="feature_3_title" class="form-input" value="<%= settings.feature_3_title %>">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">Açıklama</label>
+            <textarea name="feature_3_desc" class="form-textarea" rows="2"><%= settings.feature_3_desc %></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: GÜNÜN ÖNE ÇIKANI / SPATLİGHT KAMPANYA ALANI -->
+    <div class="admin-card" style="margin-bottom: 2rem;">
+      <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        4. Günün Öne Çıkanı & Özel Vitrin Kampanyası
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Ana sayfada koyu yeşil arka planlı büyük kutuda haftalık önerinizi veya özel menü ikilinizi sergileyin.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        <div class="form-group">
+          <label class="form-label">Rozet Yazısı</label>
+          <input type="text" name="spotlight_badge" class="form-input" value="<%= settings.spotlight_badge || 'Haftanın Özel Önerisi' %>">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Örnek: Günün Önerisi, Haftanın Favorisi</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Özel Başlık</label>
+          <input type="text" name="spotlight_title" class="form-input" value="<%= settings.spotlight_title || 'Iced Spanish Latte & San Sebastian' %>">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Öne çıkarmak istediğiniz ürün veya tatlı ikilisi.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Açıklama Metni</label>
+        <textarea name="spotlight_description" class="form-textarea" rows="2"><%= settings.spotlight_description %></textarea>
+      </div>
+
+      <!-- Spotlight Image Uploader & Preview -->
+      <div class="form-group" style="background: #F8F5F0; padding: 1.25rem; border-radius: var(--radius-md); border: 1px dashed var(--border-light);">
+        <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+          <span>Kampanya / Vitrin Fotoğrafı</span>
+          <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-muted);">İsteğe bağlı: Değiştirmek istemiyorsanız boş bırakın.</span>
+        </label>
+        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+          <div style="width: 160px; height: 110px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-light); background: #eee; flex-shrink: 0;">
+            <img id="preview_spotlight_image" src="<%= settings.spotlight_image %>" alt="Spotlight Preview" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <input type="file" name="spotlight_image" class="form-input" accept="image/*" onchange="previewFile(this, 'preview_spotlight_image')">
+            <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.35rem;">
+              Bu kampanya için leziz bir tatlı veya kahve fotoğrafı seçin.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: HAKKIMIZDA SAYFASI İÇERİKLERİ -->
+    <div class="admin-card" style="margin-bottom: 2.5rem;">
+      <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        5. "Hakkımızda" Sayfası Metinleri ve Fotoğrafları
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Kafenin hikayesini ve fotoğraflarını buradan kolayca düzenleyin.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        <div class="form-group">
+          <label class="form-label">Sayfa Ana Başlığı</label>
+          <input type="text" name="about_title" class="form-input" value="<%= settings.about_title %>">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Alt Karşılama Cümlesi</label>
+          <input type="text" name="about_subtitle" class="form-input" value="<%= settings.about_subtitle %>">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">1. Hikaye Paragrafı (Kahve Deneyimi)</label>
+        <textarea name="about_story_1" class="form-textarea" rows="3"><%= settings.about_story_1 %></textarea>
+      </div>
+
+      <div class="form-group" style="background: #F8F5F0; padding: 1.25rem; border-radius: var(--radius-md); border: 1px dashed var(--border-light); margin-bottom: 1.5rem;">
+        <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+          <span>1. Görsel (Kahve / Barista Fotoğrafı)</span>
+          <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-muted);">İsteğe bağlı</span>
+        </label>
+        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+          <div style="width: 160px; height: 110px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-light); background: #eee; flex-shrink: 0;">
+            <img id="preview_about_image_1" src="<%= settings.about_image_1 %>" alt="About 1" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <input type="file" name="about_image_1" class="form-input" accept="image/*" onchange="previewFile(this, 'preview_about_image_1')">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">2. Hikaye Paragrafı (Fırın & Tatlılar)</label>
+        <textarea name="about_story_2" class="form-textarea" rows="3"><%= settings.about_story_2 %></textarea>
+      </div>
+
+      <div class="form-group" style="background: #F8F5F0; padding: 1.25rem; border-radius: var(--radius-md); border: 1px dashed var(--border-light); margin-bottom: 0;">
+        <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+          <span>2. Görsel (Tatlı / Fırın Fotoğrafı)</span>
+          <span style="font-size: 0.75rem; font-weight: normal; color: var(--text-muted);">İsteğe bağlı</span>
+        </label>
+        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+          <div style="width: 160px; height: 110px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-light); background: #eee; flex-shrink: 0;">
+            <img id="preview_about_image_2" src="<%= settings.about_image_2 %>" alt="About 2" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <input type="file" name="about_image_2" class="form-input" accept="image/*" onchange="previewFile(this, 'preview_about_image_2')">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STICKY BOTTOM SAVE ACTION BAR -->
+    <div style="position: sticky; bottom: 1.5rem; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); padding: 1.25rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; z-index: 50; flex-wrap: wrap; gap: 1rem;">
+      <div style="color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Değişikliklerin sitede görünmesi için aşağıdaki butona basmanız yeterlidir.
+      </div>
+      <button type="submit" class="btn-primary" style="padding: 0.85rem 2.25rem; font-size: 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.6rem; box-shadow: 0 4px 15px rgba(46, 90, 68, 0.35);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+        Tüm Değişiklikleri Kaydet
+      </button>
+    </div>
+
+  </form>
+</main>
+
+<script>
+  // Instant visual file preview without uploading first
+  function previewFile(input, previewId) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById(previewId);
+        if (img) {
+          img.src = e.target.result;
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+
+<%- include('../partials/footer') %>

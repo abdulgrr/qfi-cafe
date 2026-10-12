@@ -95,6 +95,21 @@
       </div>
     <% } %>
   </section>
+
+  <!-- INSTAGRAM DAILY SPECIALS CTA -->
+  <div style="max-width: 680px; margin: 0 auto 5rem; padding: 0 1.5rem; text-align: center;">
+    <div style="background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border: 1px solid var(--border-light); border-radius: var(--radius-xl); padding: 2.25rem 1.5rem; box-shadow: var(--shadow-sm);">
+      <div style="width: 50px; height: 50px; border-radius: 50%; background: #FAF0E6; color: var(--accent-brown); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.75rem; border: 1px solid rgba(92, 61, 46, 0.15);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+      </div>
+      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.4rem; color: var(--text-dark);">Günlük Özel Lezzetlerimizi Kaçırmayın</h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6;">Fırından yeni çıkan sıcak kruvasan saatleri ve günün sürpriz tatlıları anlık olarak Instagram'da paylaşılmaktadır.</p>
+      <a href="<%= (typeof settings !== 'undefined' && settings.instagram_url) ? settings.instagram_url : 'https://www.instagram.com/qficafe/' %>" target="_blank" rel="noopener noreferrer" class="btn-instagram" style="display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.8rem 1.75rem; font-size: 0.92rem;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        <span>Instagram'da @qficafe Takip Et</span>
+      </a>
+    </div>
+  </div>
 </main>
 
 <%- include('../partials/footer') %>

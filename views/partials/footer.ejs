@@ -8,6 +8,12 @@
         <p style="color: #A0968E; max-width: 320px; font-size: 0.9rem;">
           Özenle seçilmiş kahve çekirdekleri, günlük taze pişen özel tatlılar ve Pendik'in samimi atmosferi.
         </p>
+        <div style="margin-top: 1.1rem;">
+          <a href="<%= (typeof settings !== 'undefined' && settings.instagram_url) ? settings.instagram_url : 'https://www.instagram.com/qficafe/' %>" target="_blank" rel="noopener noreferrer" class="footer-instagram-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            <span>Instagram: @qficafe</span>
+          </a>
+        </div>
       </div>
       <div>
         <h4 style="margin-bottom: 0.75rem;">Sayfalar</h4>
@@ -15,6 +21,7 @@
         <p style="font-size: 0.9rem; margin-bottom: 0.4rem;"><a href="/menu" style="color: #A0968E;">Menü</a></p>
         <p style="font-size: 0.9rem; margin-bottom: 0.4rem;"><a href="/about" style="color: #A0968E;">Hakkımızda</a></p>
         <p style="font-size: 0.9rem; margin-bottom: 0.4rem;"><a href="/contact" style="color: #A0968E;">İletişim & Konum</a></p>
+        <p style="font-size: 0.9rem; margin-bottom: 0.4rem;"><a href="<%= (typeof settings !== 'undefined' && settings.instagram_url) ? settings.instagram_url : 'https://www.instagram.com/qficafe/' %>" target="_blank" rel="noopener noreferrer" style="color: #D4A373;">Instagram @qficafe</a></p>
         <p style="font-size: 0.9rem; margin-bottom: 0.4rem;"><a href="/admin/login" style="color: #A0968E;">Admin Girişi</a></p>
       </div>
       <div>
@@ -30,6 +37,10 @@
         <p style="font-size: 0.9rem; color: #A0968E; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <%= (typeof cafeInfo !== 'undefined' && cafeInfo.hours) ? cafeInfo.hours : 'Her Gün: 09:00 - 23:30' %>
+        </p>
+        <p style="font-size: 0.9rem; color: #A0968E; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #D4A373;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <a href="<%= (typeof settings !== 'undefined' && settings.instagram_url) ? settings.instagram_url : 'https://www.instagram.com/qficafe/' %>" target="_blank" rel="noopener noreferrer" style="color: #D4A373; font-weight: 600;">@qficafe</a>
         </p>
       </div>
     </div>

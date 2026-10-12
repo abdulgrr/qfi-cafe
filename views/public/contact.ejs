@@ -53,6 +53,23 @@
           Haftanın 7 günü hizmetinizdeyiz.
         </p>
       </div>
+
+      <div class="contact-item contact-item-instagram">
+        <h4 style="display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #D4A373;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          Instagram
+        </h4>
+        <p style="color: var(--text-dark); font-weight: 700; font-size: 1.05rem; margin-top: 0.4rem;">
+          @qficafe
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+          Günlük menü duyuruları, etkinlikler ve taze hikayeler için bizi takip edin.
+        </p>
+        <a href="<%= (typeof cafeInfo !== 'undefined' && cafeInfo.instagramUrl) ? cafeInfo.instagramUrl : 'https://www.instagram.com/qficafe/' %>" target="_blank" rel="noopener noreferrer" class="btn-instagram" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding: 0.55rem 1.1rem; font-size: 0.85rem;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          Instagram'da Aç (@qficafe)
+        </a>
+      </div>
     </div>
 
     <!-- ACCURATE GOOGLE MAPS EMBED -->

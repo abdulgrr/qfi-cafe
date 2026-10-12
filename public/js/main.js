@@ -48,4 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
       filterProducts();
     });
   }
+
+  // Highlight active navigation items based on current URL path
+  const currentPath = window.location.pathname;
+  document.querySelectorAll('.mobile-nav-item, .nav-link').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPath || (href !== '/' && currentPath === href)) {
+      link.classList.add('active');
+    } else if (href === '/' && (currentPath === '/' || currentPath === '')) {
+      link.classList.add('active');
+    }
+  });
 });

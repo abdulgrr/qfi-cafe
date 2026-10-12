@@ -1,22 +1,20 @@
 <%- include('../partials/header') %>
 
 <main>
-  <div class="menu-header-box">
-    <!-- PINTEREST STYLE SEARCH BAR WITH SVG SEARCH ICON -->
+  <div class="menu-header-box" style="text-align: center; max-width: 680px; margin: 2.5rem auto 1.75rem; padding: 0 1.5rem;">
+    <h1 style="font-family: var(--font-serif); font-size: 2.6rem; color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1.2;">
+      <%= (typeof settings !== 'undefined' && settings.menu_title) ? settings.menu_title : 'Kahve & Lezzet Menüsü' %>
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1.75rem;">
+      <%= (typeof settings !== 'undefined' && settings.menu_subtitle) ? settings.menu_subtitle : 'Taze demlenen kahvelerimiz ve günlük hazırlanan lezzetlerimiz' %>
+    </p>
+
+    <!-- SEARCH BAR WITH SVG SEARCH ICON -->
     <div class="search-box-container">
       <span class="search-icon" style="display: flex; align-items: center;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </span>
       <input type="text" id="menu-search-input" class="search-input" placeholder="Kahve, tatlı veya içecek ara..." autocomplete="off">
-    </div>
-
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <h1 style="font-family: var(--font-serif); font-size: 2.4rem; color: var(--text-dark); margin-bottom: 0.4rem;">
-        <%= (typeof settings !== 'undefined' && settings.menu_title) ? settings.menu_title : 'Kahve & Lezzet Menüsü' %>
-      </h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">
-        <%= (typeof settings !== 'undefined' && settings.menu_subtitle) ? settings.menu_subtitle : 'Taze demlenen kahvelerimiz ve günlük hazırlanan lezzetlerimiz' %>
-      </p>
     </div>
   </div>
 
@@ -37,17 +35,35 @@
   <!-- PRODUCT GRID -->
   <section class="product-section">
     <% if (products.length === 0) { %>
-      <div style="text-align: center; padding: 4rem 1rem; background: var(--card-bg); border-radius: var(--radius-xl); border: 1px solid var(--border-light);">
-        <p style="font-size: 1.2rem; color: var(--text-muted);">Henüz menüye ürün eklenmemiş.</p>
-        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">Admin panelinden yeni ürünler ekleyebilirsiniz.</p>
+      <div style="text-align: center; padding: 4rem 1rem; background: #FFFFFF; border-radius: var(--radius-xl); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); max-width: 600px; margin: 0 auto;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #E8F0EA; color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+        </div>
+        <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark);">Menüde henüz ürün bulunmuyor.</p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.35rem;">Yönetim panelinden dilediğiniz lezzetleri ekleyebilirsiniz.</p>
       </div>
     <% } else { %>
       <div class="product-grid" id="product-grid-container">
         <% products.forEach(product => { %>
-          <% const catSlug = product.categories ? product.categories.slug : ''; %>
+          <% 
+            const catSlug = product.categories ? product.categories.slug : '';
+            const tagsList = (product.tags && product.tags.trim()) ? product.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+            const primaryTag = tagsList.length > 0 ? tagsList[0] : null;
+            const remainingTags = tagsList.slice(1);
+          %>
           <div class="product-card" data-category-slug="<%= catSlug %>" data-product-name="<%= product.name.toLowerCase() %>" data-product-desc="<%= (product.description || '').toLowerCase() %>">
             <div class="product-img-wrapper">
               <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img" loading="lazy">
+              <% if (primaryTag) { %>
+                <div class="product-floating-tag">
+                  <%= primaryTag %>
+                </div>
+              <% } %>
+              <% if (!product.is_available) { %>
+                <div class="product-floating-tag" style="left: auto; right: 0.85rem; color: #D32F2F; background: rgba(255, 235, 238, 0.95);">
+                  Tükendi
+                </div>
+              <% } %>
             </div>
             <div class="product-details">
               <div class="product-title-row">
@@ -56,9 +72,9 @@
               </div>
               <p class="product-desc"><%= product.description || 'Özel demlenmiş lezzet.' %></p>
               
-              <% if (product.tags && product.tags.trim()) { %>
+              <% if (remainingTags.length > 0) { %>
                 <div class="product-size-row">
-                  <% product.tags.split(',').map(t => t.trim()).filter(Boolean).forEach(tag => { %>
+                  <% remainingTags.forEach(tag => { %>
                     <span class="size-pill"><%= tag %></span>
                   <% }) %>
                 </div>
@@ -67,6 +83,10 @@
               <div class="product-card-footer">
                 <span class="status-badge <%= product.is_available ? 'available' : 'out' %>">
                   <%= product.is_available ? 'Mevcut' : 'Tükendi' %>
+                </span>
+                <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
+                  Taze Sunum
                 </span>
               </div>
             </div>

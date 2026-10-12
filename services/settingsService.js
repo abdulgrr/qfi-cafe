@@ -15,14 +15,11 @@ const defaultSettings = {
   logo_url: '', // Custom uploaded logo image URL
 
   // Hero Section (Ana Sayfa Başlık & Butonlar)
-  hero_badge: "Pendik'in En Sevilen Butik Kafesi",
+  hero_badge: "Pendik'in En İddialı Butik Kafesi",
   hero_title: 'Sıcak Bir Kahve, Eşsiz Lezzetler.',
   hero_subtitle: "Pendik'in kalbinde özenle seçilmiş 3. nesil kahve çekirdekleri, günlük fırından taze çıkan boutique tatlılar ve huzur dolu atmosfer Qfi Cafe'de sizi bekliyor.",
   hero_btn1_text: 'Lezzet Menüsü',
   hero_btn2_text: 'Bize Ulaşın',
-  hero_rating: '4.9',
-  hero_rating_text: 'Müşteri Memnuniyeti',
-  hero_rating_sub: '250+ Değerlendirme & Yorum',
 
   // Hero Carousel Slider Images (4-5 Images)
   hero_slide_1: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1000&q=80',
@@ -43,7 +40,6 @@ const defaultSettings = {
   spotlight_badge: 'Haftanın Özel Önerisi',
   spotlight_title: 'Özel V60 Filtre & Taze Çikolatalı Kruvasan',
   spotlight_description: 'Etiyopya Yirgacheffe çekirdeklerimizle demlenen taze filtre kahve ve Belçika çikolatalı fırından yeni çıkmış sıcak kruvasan ile güne mükemmel bir mola verin.',
-  spotlight_price: '280.00',
   spotlight_image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80',
   spotlight_button_text: 'Menüde Keşfet',
 
@@ -113,10 +109,35 @@ function saveLocalSettings(data) {
   }
 }
 
+const ALLOWED_DB_COLUMNS = new Set([
+  'id', 'cafe_name', 'logo_url', 'hero_badge', 'hero_title', 'hero_subtitle',
+  'hero_btn1_text', 'hero_btn2_text', 'hero_slide_1', 'hero_slide_2', 'hero_slide_3',
+  'hero_slide_4', 'hero_slide_5', 'feature_1_title', 'feature_1_desc', 'feature_2_title',
+  'feature_2_desc', 'feature_3_title', 'feature_3_desc', 'spotlight_badge', 'spotlight_title',
+  'spotlight_description', 'spotlight_button_text', 'spotlight_image', 'gallery_title',
+  'gallery_subtitle', 'menu_title', 'menu_subtitle', 'about_title', 'about_subtitle',
+  'about_sec1_title', 'about_story_1', 'about_sec2_title', 'about_story_2',
+  'about_image_1', 'about_image_2', 'phone', 'phone_raw', 'working_hours',
+  'instagram_url', 'address', 'maps_url', 'footer_desc', 'updated_at'
+]);
+
+function buildDbPayload(obj) {
+  const payload = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (ALLOWED_DB_COLUMNS.has(k) && v !== undefined && v !== null) {
+      payload[k] = v;
+    }
+  }
+  payload.id = 1;
+  payload.updated_at = new Date().toISOString();
+  return payload;
+}
+
 /**
  * Get current site settings (Supabase first, fallback to local file)
  */
 async function getSettings() {
+  const local = readLocalSettings();
   try {
     const { data, error } = await supabase
       .from('site_settings')
@@ -125,17 +146,35 @@ async function getSettings() {
       .maybeSingle();
 
     if (error) {
-      return readLocalSettings();
+      return local;
     }
 
     if (data) {
-      return { ...defaultSettings, ...data };
+      // If table row exists but is empty (e.g. freshly created with null values), initialize it with local settings!
+      if (!data.cafe_name) {
+        try {
+          const seedPayload = buildDbPayload(local);
+          await supabase.from('site_settings').update(seedPayload).eq('id', 1);
+        } catch (seedErr) {
+          console.warn('Initial seed error:', seedErr.message);
+        }
+        return local;
+      }
+
+      // Merge data, ignoring null or undefined columns
+      const merged = { ...defaultSettings, ...local };
+      for (const [key, val] of Object.entries(data)) {
+        if (val !== null && val !== undefined) {
+          merged[key] = val;
+        }
+      }
+      return merged;
     }
   } catch (err) {
     console.warn('Supabase site_settings read error, using fallback:', err.message);
   }
 
-  return readLocalSettings();
+  return local;
 }
 
 /**
@@ -198,9 +237,10 @@ async function updateSettings(fields, files = {}) {
 
   // Try saving to Supabase if table exists
   try {
+    const dbPayload = buildDbPayload(updated);
     const { error } = await supabase
       .from('site_settings')
-      .upsert({ id: 1, ...updated, updated_at: new Date().toISOString() });
+      .upsert(dbPayload);
 
     if (error) {
       console.warn('Supabase site_settings upsert error:', error.message);

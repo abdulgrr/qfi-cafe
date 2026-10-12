@@ -12,10 +12,10 @@
 
     <div style="text-align: center; margin-bottom: 1.5rem;">
       <h1 style="font-family: var(--font-serif); font-size: 2.4rem; color: var(--text-dark); margin-bottom: 0.4rem;">
-        Kahve & Lezzet Menüsü
+        <%= (typeof settings !== 'undefined' && settings.menu_title) ? settings.menu_title : 'Kahve & Lezzet Menüsü' %>
       </h1>
       <p style="color: var(--text-muted); font-size: 0.95rem;">
-        Taze demlenen kahvelerimiz ve günlük hazırlanan lezzetlerimiz
+        <%= (typeof settings !== 'undefined' && settings.menu_subtitle) ? settings.menu_subtitle : 'Taze demlenen kahvelerimiz ve günlük hazırlanan lezzetlerimiz' %>
       </p>
     </div>
   </div>
@@ -56,10 +56,13 @@
               </div>
               <p class="product-desc"><%= product.description || 'Özel demlenmiş lezzet.' %></p>
               
-              <div class="product-size-row">
-                <span class="size-pill">Taze Demleme</span>
-                <span class="size-pill">Standart</span>
-              </div>
+              <% if (product.tags && product.tags.trim()) { %>
+                <div class="product-size-row">
+                  <% product.tags.split(',').map(t => t.trim()).filter(Boolean).forEach(tag => { %>
+                    <span class="size-pill"><%= tag %></span>
+                  <% }) %>
+                </div>
+              <% } %>
 
               <div class="product-card-footer">
                 <span class="status-badge <%= product.is_available ? 'available' : 'out' %>">

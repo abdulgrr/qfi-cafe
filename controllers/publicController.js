@@ -1,4 +1,5 @@
 const supabase = require('../config/supabase');
+const settingsService = require('../services/settingsService');
 
 /**
  * Render Homepage
@@ -11,6 +12,11 @@ const getHomePage = async (req, res) => {
       .eq('is_available', true)
       .order('display_order', { ascending: true })
       .limit(6);
+
+    const allTags = settingsService.getAllProductTags();
+    (featuredProducts || []).forEach(p => {
+      p.tags = p.tags || allTags[p.id] || '';
+    });
 
     res.render('public/index', {
       title: 'Qfi Cafe | Pendik Butik Cafe & Lezzet Deneyimi',
@@ -39,6 +45,11 @@ const getMenuPage = async (req, res) => {
       .from('products')
       .select('*, categories(id, name, slug)')
       .order('display_order', { ascending: true });
+
+    const allTags = settingsService.getAllProductTags();
+    (products || []).forEach(p => {
+      p.tags = p.tags || allTags[p.id] || '';
+    });
 
     const selectedCategory = req.query.category || 'all';
 

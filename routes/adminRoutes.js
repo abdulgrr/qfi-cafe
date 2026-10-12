@@ -34,7 +34,12 @@ router.get('/settings', adminController.getSettingsPage);
 router.post(
   '/settings',
   upload.fields([
-    { name: 'hero_image', maxCount: 1 },
+    { name: 'logo_image', maxCount: 1 },
+    { name: 'hero_slide_1', maxCount: 1 },
+    { name: 'hero_slide_2', maxCount: 1 },
+    { name: 'hero_slide_3', maxCount: 1 },
+    { name: 'hero_slide_4', maxCount: 1 },
+    { name: 'hero_slide_5', maxCount: 1 },
     { name: 'spotlight_image', maxCount: 1 },
     { name: 'about_image_1', maxCount: 1 },
     { name: 'about_image_2', maxCount: 1 }

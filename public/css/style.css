@@ -192,7 +192,9 @@ a {
   position: relative;
 }
 
-.hero-img-box {
+.hero-img-box,
+.hero-slider {
+  position: relative;
   width: 100%;
   height: 480px;
   border-radius: var(--radius-xl);
@@ -200,10 +202,123 @@ a {
   box-shadow: var(--shadow-lg);
 }
 
-.hero-img-box img {
+.hero-slides-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.6s ease;
+  transform: scale(1.06);
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.hero-img-box img,
+.hero-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 0.4rem 0.75rem;
+  border-radius: 99px;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+  background: #FFFFFF;
+  width: 24px;
+  border-radius: 12px;
+}
+
+/* CROPPER MODAL STYLES */
+.cropper-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.cropper-modal-container {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 680px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.cropper-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cropper-modal-body {
+  padding: 1.25rem;
+  background: #18181B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 460px;
+  overflow: hidden;
+}
+
+.cropper-modal-body img {
+  max-width: 100%;
+  max-height: 420px;
+  display: block;
+}
+
+.cropper-modal-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FAF8F5;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 /* PINTEREST STYLE SEARCH & MENU HEADER */

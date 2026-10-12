@@ -108,7 +108,8 @@ const getAddProductPage = async (req, res) => {
  */
 const createProduct = async (req, res) => {
   try {
-    const { name, category_id, description, price, is_available, display_order } = req.body;
+    const { name, category_id, description, price, is_available, display_order, tags } = req.body;
+
     let imageUrl = '';
     let cloudinaryId = '';
 
@@ -119,20 +120,29 @@ const createProduct = async (req, res) => {
       cloudinaryId = uploadResult.public_id;
     }
 
-    const { error } = await supabase.from('products').insert([
-      {
-        name,
-        category_id,
-        description,
-        price: parseFloat(price),
-        image_url: imageUrl,
-        cloudinary_public_id: cloudinaryId,
-        is_available: is_available === 'on' || is_available === 'true',
-        display_order: parseInt(display_order) || 0
-      }
-    ]);
+    const newProd = {
+      name,
+      category_id,
+      description,
+      price: parseFloat(price),
+      image_url: imageUrl,
+      cloudinary_public_id: cloudinaryId,
+      is_available: is_available === 'on' || is_available === 'true',
+      display_order: parseInt(display_order) || 0
+    };
 
-    if (error) throw error;
+    // Try inserting with tags first
+    let result = await supabase.from('products').insert([{ ...newProd, tags: tags || '' }]).select();
+    if (result.error && result.error.code === 'PGRST204') {
+      result = await supabase.from('products').insert([newProd]).select();
+    }
+
+    if (result.error) throw result.error;
+
+    const insertedProduct = result.data && result.data[0];
+    if (insertedProduct && tags) {
+      settingsService.setProductTags(insertedProduct.id, tags);
+    }
 
     res.redirect('/admin/dashboard');
   } catch (error) {
@@ -152,8 +162,10 @@ const getEditProductPage = async (req, res) => {
 
     if (!product) return res.redirect('/admin/dashboard');
 
+    product.tags = product.tags || settingsService.getProductTags(id);
+
     res.render('admin/product-form', {
-      title: 'Ürün Düzenle | Qfi Coffee Admin',
+      title: 'Ürün Düzenle | Qfi Cafe Admin',
       categories: categories || [],
       product
     });
@@ -169,7 +181,7 @@ const getEditProductPage = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, category_id, description, price, is_available, display_order, existing_image, existing_cloudinary_id } = req.body;
+    const { name, category_id, description, price, is_available, display_order, tags, existing_image, existing_cloudinary_id } = req.body;
 
     let imageUrl = existing_image || '';
     let cloudinaryId = existing_cloudinary_id || '';
@@ -184,21 +196,25 @@ const updateProduct = async (req, res) => {
       cloudinaryId = uploadResult.public_id;
     }
 
-    const { error } = await supabase
-      .from('products')
-      .update({
-        name,
-        category_id,
-        description,
-        price: parseFloat(price),
-        image_url: imageUrl,
-        cloudinary_public_id: cloudinaryId,
-        is_available: is_available === 'on' || is_available === 'true',
-        display_order: parseInt(display_order) || 0
-      })
-      .eq('id', id);
+    const updateData = {
+      name,
+      category_id,
+      description,
+      price: parseFloat(price),
+      image_url: imageUrl,
+      cloudinary_public_id: cloudinaryId,
+      is_available: is_available === 'on' || is_available === 'true',
+      display_order: parseInt(display_order) || 0
+    };
 
-    if (error) throw error;
+    settingsService.setProductTags(id, tags);
+
+    let result = await supabase.from('products').update({ ...updateData, tags: tags || '' }).eq('id', id);
+    if (result.error && result.error.code === 'PGRST204') {
+      result = await supabase.from('products').update(updateData).eq('id', id);
+    }
+
+    if (result.error) throw result.error;
 
     res.redirect('/admin/dashboard');
   } catch (error) {

@@ -68,10 +68,14 @@ CREATE TABLE IF NOT EXISTS site_settings (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Enable RLS & policies
+-- 3. Enable RLS (Row Level Security) & Policies
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow public read site_settings" ON site_settings FOR SELECT USING (true);
-CREATE POLICY "Allow full site_settings access" ON site_settings FOR ALL USING (true);
 
--- Insert initial row id 1
+DROP POLICY IF EXISTS "Allow public read site_settings" ON site_settings;
+CREATE POLICY "Allow public read site_settings" ON site_settings FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow full site_settings access" ON site_settings;
+CREATE POLICY "Allow full site_settings access" ON site_settings FOR ALL USING (true) WITH CHECK (true);
+
+-- 4. Insert initial row id 1
 INSERT INTO site_settings (id) VALUES (1) ON CONFLICT (id) DO NOTHING;

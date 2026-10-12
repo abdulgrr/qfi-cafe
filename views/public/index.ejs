@@ -55,17 +55,6 @@
             <button type="button" class="slider-dot <%= idx === 0 ? 'active' : '' %>" data-index="<%= idx %>" aria-label="Slayt <%= idx + 1 %>"></button>
           <% }) %>
         </div>
-
-        <!-- Customer Satisfaction Floating Badge -->
-        <div style="position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 0.75rem 1.25rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 0.75rem; z-index: 10;">
-          <div style="background: #FFF9E6; color: #D97706; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
-            <%= settings.hero_rating || '4.9' %>
-          </div>
-          <div>
-            <div style="font-weight: 800; font-size: 0.9rem; color: var(--text-dark);"><%= settings.hero_rating_text || 'Müşteri Memnuniyeti' %></div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);"><%= settings.hero_rating_sub || '250+ Değerlendirme & Yorum' %></div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -153,8 +142,8 @@
 
   <!-- SPECIAL SPOTLIGHT SHOWCASE BANNER -->
   <section style="max-width: 1200px; margin: 5rem auto; padding: 0 1.5rem;">
-    <div style="background: linear-gradient(135deg, #2E5A44 0%, #1E3F2F 100%); color: #FAF7F2; border-radius: var(--radius-xl); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: var(--shadow-lg); align-items: center;">
-      <div style="padding: 3.5rem 3rem;">
+    <div class="spotlight-banner">
+      <div class="spotlight-content">
         <div style="background: rgba(255, 255, 255, 0.15); display: inline-block; padding: 0.35rem 1rem; border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem;">
           <%= settings.spotlight_badge || 'Günün Önerisi' %>
         </div>
@@ -168,8 +157,8 @@
           <%= settings.spotlight_button_text || 'Menüde Keşfet' %> &rarr;
         </a>
       </div>
-      <div style="height: 100%; min-height: 380px;">
-        <img src="<%= settings.spotlight_image || 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80' %>" alt="<%= settings.spotlight_title %>" style="width: 100%; height: 100%; object-fit: cover;">
+      <div class="spotlight-image-box">
+        <img src="<%= settings.spotlight_image || 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=900&q=80' %>" alt="<%= settings.spotlight_title %>">
       </div>
     </div>
   </section>
@@ -180,18 +169,18 @@
       <h2 style="font-family: var(--font-serif); font-size: 2.4rem;"><%= settings.gallery_title || 'Qfi Cafe Atmosferi' %></h2>
       <p style="color: var(--text-muted); font-size: 0.95rem;"><%= settings.gallery_subtitle || "Sıcak ahşap dokular, taze kahve kokusu ve Pendik'te huzurlu anlar" %></p>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
-      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
-        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80" alt="Espresso Bar" style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80" alt="Espresso Bar">
       </div>
-      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
-        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Fresh Bakery Croissant" style="width: 100%; height: 100%; object-fit: cover;">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Fresh Bakery Croissant">
       </div>
-      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
-        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Pour over V60" style="width: 100%; height: 100%; object-fit: cover;">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Pour over V60">
       </div>
-      <div style="height: 260px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
-        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Cafe Seating Atmosphere" style="width: 100%; height: 100%; object-fit: cover;">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Cafe Seating Atmosphere">
       </div>
     </div>
   </section>

@@ -260,11 +260,22 @@ function getProductTags(productId) {
   return map[productId] || '';
 }
 
+async function checkSupabaseTableStatus() {
+  try {
+    const { error } = await supabase.from('site_settings').select('id').limit(1);
+    if (!error) return true;
+    return false;
+  } catch (e) {
+    return false;
+  }
+}
+
 module.exports = {
   defaultSettings,
   getSettings,
   updateSettings,
   getAllProductTags,
   setProductTags,
-  getProductTags
+  getProductTags,
+  checkSupabaseTableStatus
 };

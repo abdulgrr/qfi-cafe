@@ -325,10 +325,12 @@ const getSettingsPage = async (req, res) => {
   try {
     const settings = await settingsService.getSettings();
     const isSaved = req.query.saved === 'true';
+    const supabaseReady = await settingsService.checkSupabaseTableStatus();
     res.render('admin/settings', {
       title: 'Site İçeriği & Ayarlar | Qfi Cafe',
       settings,
       isSaved,
+      supabaseReady,
       error: null
     });
   } catch (error) {
@@ -337,6 +339,7 @@ const getSettingsPage = async (req, res) => {
       title: 'Site İçeriği & Ayarlar | Qfi Cafe',
       settings: settingsService.defaultSettings,
       isSaved: false,
+      supabaseReady: false,
       error: 'Ayarlar yüklenirken bir hata oluştu.'
     });
   }

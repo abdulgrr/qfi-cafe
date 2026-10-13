@@ -253,51 +253,99 @@ async function updateSettings(fields, files = {}) {
 }
 
 /**
- * Helper: Product Tags Mapping (Stores custom badges for each product)
+ * Helper: Product Metadata Store (featured_ids & tags)
+ * Persisted securely in Supabase site_settings and local fallback
  */
-function getAllProductTags() {
+async function getProductMeta() {
   try {
-    if (fs.existsSync(TMP_TAGS_FILE)) {
-      return JSON.parse(fs.readFileSync(TMP_TAGS_FILE, 'utf8'));
-    }
-    if (fs.existsSync(BUNDLED_TAGS_FILE)) {
-      return JSON.parse(fs.readFileSync(BUNDLED_TAGS_FILE, 'utf8'));
+    const settings = await getSettings();
+    if (settings && settings.gallery_subtitle) {
+      const trimmed = settings.gallery_subtitle.trim();
+      if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+        const parsed = JSON.parse(trimmed);
+        return {
+          featured_ids: Array.isArray(parsed.featured_ids) ? parsed.featured_ids : [],
+          tags: typeof parsed.tags === 'object' && parsed.tags !== null ? parsed.tags : {}
+        };
+      }
     }
   } catch (e) {
-    console.warn('Product tags read error:', e.message);
+    console.warn('Error reading product meta:', e.message);
   }
-  return {};
+  return { featured_ids: [], tags: {} };
 }
 
-function saveProductTags(tagsMap) {
+async function saveProductMeta(meta) {
   try {
-    const dir = path.dirname(BUNDLED_TAGS_FILE);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(BUNDLED_TAGS_FILE, JSON.stringify(tagsMap, null, 2), 'utf8');
-  } catch (e) {
+    const jsonStr = JSON.stringify({
+      featured_ids: Array.isArray(meta.featured_ids) ? meta.featured_ids : [],
+      tags: typeof meta.tags === 'object' && meta.tags !== null ? meta.tags : {}
+    });
+
     try {
-      fs.writeFileSync(TMP_TAGS_FILE, JSON.stringify(tagsMap, null, 2), 'utf8');
-    } catch (tmpErr) {
-      console.warn('TMP product tags save error:', tmpErr.message);
+      await supabase.from('site_settings').update({ gallery_subtitle: jsonStr }).eq('id', 1);
+    } catch (sbErr) {
+      console.warn('Supabase product meta save error:', sbErr.message);
     }
+
+    const local = readLocalSettings();
+    local.gallery_subtitle = jsonStr;
+    saveLocalSettings(local);
+
+    return true;
+  } catch (e) {
+    console.error('Error saving product meta:', e.message);
+    return false;
   }
 }
 
-function setProductTags(productId, tagsString) {
-  if (!productId) return;
-  const map = getAllProductTags();
-  if (tagsString && tagsString.trim()) {
-    map[productId] = tagsString.trim();
-  } else {
-    delete map[productId];
-  }
-  saveProductTags(map);
+async function getFeaturedProductIds() {
+  const meta = await getProductMeta();
+  return meta.featured_ids;
 }
 
-function getProductTags(productId) {
+async function isProductFeatured(productId) {
+  if (!productId) return false;
+  const ids = await getFeaturedProductIds();
+  return ids.includes(productId);
+}
+
+async function toggleFeaturedProduct(productId, desiredState) {
+  if (!productId) return false;
+  const meta = await getProductMeta();
+  const exists = meta.featured_ids.includes(productId);
+  const shouldFeature = desiredState !== undefined ? Boolean(desiredState) : !exists;
+
+  if (shouldFeature && !exists) {
+    meta.featured_ids.push(productId);
+  } else if (!shouldFeature && exists) {
+    meta.featured_ids = meta.featured_ids.filter(id => id !== productId);
+  }
+
+  await saveProductMeta(meta);
+  return shouldFeature;
+}
+
+async function getAllProductTags() {
+  const meta = await getProductMeta();
+  return meta.tags;
+}
+
+async function getProductTags(productId) {
   if (!productId) return '';
-  const map = getAllProductTags();
-  return map[productId] || '';
+  const meta = await getProductMeta();
+  return meta.tags[productId] || '';
+}
+
+async function setProductTags(productId, tagsString) {
+  if (!productId) return;
+  const meta = await getProductMeta();
+  if (tagsString && tagsString.trim()) {
+    meta.tags[productId] = tagsString.trim();
+  } else {
+    delete meta.tags[productId];
+  }
+  await saveProductMeta(meta);
 }
 
 async function checkSupabaseTableStatus() {
@@ -314,6 +362,9 @@ module.exports = {
   defaultSettings,
   getSettings,
   updateSettings,
+  getFeaturedProductIds,
+  isProductFeatured,
+  toggleFeaturedProduct,
   getAllProductTags,
   setProductTags,
   getProductTags,

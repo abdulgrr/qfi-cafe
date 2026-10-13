@@ -1,20 +1,24 @@
 <%- include('../partials/header') %>
 
 <main>
-  <div class="menu-header-box" style="text-align: center; max-width: 680px; margin: 2.5rem auto 1.75rem; padding: 0 1.5rem;">
-    <h1 style="font-family: var(--font-serif); font-size: 2.6rem; color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1.2;">
+  <div class="menu-header-box">
+    <div class="menu-title-badge">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
+      <span>Taze & Günlük Butik Seçkiler</span>
+    </div>
+    <h1 class="menu-main-title">
       <%= (typeof settings !== 'undefined' && settings.menu_title) ? settings.menu_title : 'Kahve & Lezzet Menüsü' %>
     </h1>
-    <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1.75rem;">
-      <%= (typeof settings !== 'undefined' && settings.menu_subtitle) ? settings.menu_subtitle : 'Taze demlenen kahvelerimiz ve günlük hazırlanan lezzetlerimiz' %>
+    <p class="menu-main-subtitle">
+      <%= (typeof settings !== 'undefined' && settings.menu_subtitle) ? settings.menu_subtitle : 'Özenle seçilmiş kahvelerimiz ve her gün fırından taze çıkan lezzetlerimiz' %>
     </p>
 
-    <!-- SEARCH BAR WITH SVG SEARCH ICON -->
+    <!-- SEARCH BAR -->
     <div class="search-box-container">
-      <span class="search-icon" style="display: flex; align-items: center;">
+      <span class="search-icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </span>
-      <input type="text" id="menu-search-input" class="search-input" placeholder="Kahve, tatlı veya içecek ara..." autocomplete="off">
+      <input type="text" id="menu-search-input" class="search-input" placeholder="Kahve, kruvasan veya tatlı ara..." autocomplete="off">
     </div>
   </div>
 
@@ -22,11 +26,12 @@
   <div class="category-bar-wrapper">
     <div class="category-bar">
       <button class="category-pill <%= selectedCategory === 'all' ? 'active' : '' %>" data-category="all">
-        Tümü
+        Tümü (<%= products.length %>)
       </button>
       <% categories.forEach(cat => { %>
+        <% const catProductCount = products.filter(p => p.category_id === cat.id || (p.categories && p.categories.id === cat.id)).length; %>
         <button class="category-pill <%= selectedCategory === cat.slug ? 'active' : '' %>" data-category="<%= cat.slug %>">
-          <%= cat.name %>
+          <%= cat.name %> <% if (catProductCount > 0) { %><span class="pill-count">(<%= catProductCount %>)</span><% } %>
         </button>
       <% }) %>
     </div>
@@ -35,8 +40,8 @@
   <!-- PRODUCT GRID -->
   <section class="product-section">
     <% if (products.length === 0) { %>
-      <div style="text-align: center; padding: 4rem 1rem; background: #FFFFFF; border-radius: var(--radius-xl); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); max-width: 600px; margin: 0 auto;">
-        <div style="width: 56px; height: 56px; border-radius: 50%; background: #E8F0EA; color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+      <div class="empty-menu-state">
+        <div class="empty-icon-box">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
         </div>
         <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark);">Menüde henüz ürün bulunmuyor.</p>
@@ -47,69 +52,36 @@
         <% products.forEach(product => { %>
           <% 
             const catSlug = product.categories ? product.categories.slug : '';
-            const tagsList = (product.tags && product.tags.trim()) ? product.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
-            const primaryTag = tagsList.length > 0 ? tagsList[0] : null;
-            const remainingTags = tagsList.slice(1);
+            const isOutOfStock = !product.is_available;
           %>
-          <div class="product-card" data-category-slug="<%= catSlug %>" data-product-name="<%= product.name.toLowerCase() %>" data-product-desc="<%= (product.description || '').toLowerCase() %>">
+          <div class="product-card <%= isOutOfStock ? 'is-out-of-stock' : '' %>" data-category-slug="<%= catSlug %>" data-product-name="<%= product.name.toLowerCase() %>" data-product-desc="<%= (product.description || '').toLowerCase() %>">
             <div class="product-img-wrapper">
-              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img" loading="lazy">
-              <% if (primaryTag) { %>
-                <div class="product-floating-tag">
-                  <%= primaryTag %>
+              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img <%= isOutOfStock ? 'out-of-stock-img' : '' %>" loading="lazy">
+              
+              <% if (isOutOfStock) { %>
+                <div class="out-of-stock-overlay-badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                  <span>Stokta Yok</span>
                 </div>
-              <% } %>
-              <% if (!product.is_available) { %>
-                <div class="product-floating-tag" style="left: auto; right: 0.85rem; color: #D32F2F; background: rgba(255, 235, 238, 0.95);">
-                  Tükendi
+              <% } else if (product.tags && product.tags.trim()) { %>
+                <div class="product-floating-tag">
+                  <%= product.tags.split(',')[0].trim() %>
                 </div>
               <% } %>
             </div>
+            
             <div class="product-details">
               <div class="product-title-row">
                 <h3 class="product-name"><%= product.name %></h3>
-                <span class="product-price">₺<%= parseFloat(product.price).toFixed(2) %></span>
+                <span class="product-price <%= isOutOfStock ? 'price-muted' : '' %>">₺<%= parseFloat(product.price).toFixed(2) %></span>
               </div>
-              <p class="product-desc"><%= product.description || 'Özel demlenmiş lezzet.' %></p>
-              
-              <% if (remainingTags.length > 0) { %>
-                <div class="product-size-row">
-                  <% remainingTags.forEach(tag => { %>
-                    <span class="size-pill"><%= tag %></span>
-                  <% }) %>
-                </div>
-              <% } %>
-
-              <div class="product-card-footer">
-                <span class="status-badge <%= product.is_available ? 'available' : 'out' %>">
-                  <%= product.is_available ? 'Mevcut' : 'Tükendi' %>
-                </span>
-                <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
-                  Taze Sunum
-                </span>
-              </div>
+              <p class="product-desc"><%= product.description || 'Özel hazırlanmış taze butik lezzet.' %></p>
             </div>
           </div>
         <% }) %>
       </div>
     <% } %>
   </section>
-
-  <!-- INSTAGRAM DAILY SPECIALS CTA -->
-  <div style="max-width: 680px; margin: 0 auto 5rem; padding: 0 1.5rem; text-align: center;">
-    <div style="background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border: 1px solid var(--border-light); border-radius: var(--radius-xl); padding: 2.25rem 1.5rem; box-shadow: var(--shadow-sm);">
-      <div style="width: 50px; height: 50px; border-radius: 50%; background: #FAF0E6; color: var(--accent-brown); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.75rem; border: 1px solid rgba(92, 61, 46, 0.15);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-      </div>
-      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.4rem; color: var(--text-dark);">Günlük Özel Lezzetlerimizi Kaçırmayın</h3>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6;">Fırından yeni çıkan sıcak kruvasan saatleri ve günün sürpriz tatlıları anlık olarak Instagram'da paylaşılmaktadır.</p>
-      <a href="<%= (typeof settings !== 'undefined' && settings.instagram_url) ? settings.instagram_url : 'https://www.instagram.com/qficafe/' %>" target="_blank" rel="noopener noreferrer" class="btn-instagram" style="display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.8rem 1.75rem; font-size: 0.92rem;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-        <span>Instagram'da @qficafe Takip Et</span>
-      </a>
-    </div>
-  </div>
 </main>
 
 <%- include('../partials/footer') %>

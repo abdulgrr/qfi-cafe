@@ -23,6 +23,7 @@ router.post('/products/edit/:id', upload.single('image'), adminController.update
 
 router.post('/products/delete/:id', adminController.deleteProduct);
 router.post('/products/toggle/:id', adminController.toggleAvailability);
+router.post('/products/toggle-featured/:id', adminController.toggleFeatured);
 
 // Category Management (CRUD)
 router.post('/categories/add', adminController.createCategory);

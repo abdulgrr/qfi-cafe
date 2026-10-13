@@ -730,6 +730,102 @@ a {
   background: #D32F2F;
 }
 
+/* MENU HEADER & OUT-OF-STOCK STYLING */
+.menu-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #EBF3EE;
+  color: var(--primary);
+  padding: 0.35rem 0.95rem;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  border: 1px solid rgba(46, 90, 68, 0.18);
+}
+
+.menu-main-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.menu-main-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.pill-count {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.07);
+  margin-left: 0.35rem;
+  font-weight: 700;
+}
+
+.category-pill.active .pill-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* Out of stock product state */
+.product-card.is-out-of-stock {
+  opacity: 0.85;
+  background: #FAF8F6;
+  border-color: rgba(210, 202, 192, 0.7);
+}
+
+.out-of-stock-img {
+  filter: grayscale(88%) contrast(92%) opacity(0.55);
+  transition: filter 0.35s ease;
+}
+
+.product-card.is-out-of-stock:hover .out-of-stock-img {
+  filter: grayscale(70%) opacity(0.68);
+}
+
+.out-of-stock-overlay-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(35, 26, 20, 0.88);
+  backdrop-filter: blur(8px);
+  color: #FAF7F2;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.32rem 0.75rem;
+  border-radius: 99px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.price-muted {
+  background: #ECE7E1 !important;
+  color: #8C827A !important;
+}
+
+.empty-menu-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: #FFFFFF;
+  border-radius: var(--radius-xl);
+  border: 1px dashed var(--border-light);
+}
+
 /* ABOUT & CONTACT PAGES */
 .page-container {
   max-width: 900px;
@@ -825,6 +921,69 @@ a {
   height: 50px;
   border-radius: 8px;
   object-fit: cover;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+.out-of-stock-thumb {
+  filter: grayscale(100%) opacity(0.45);
+}
+
+/* ADMIN DASHBOARD STOCK & FEATURED TOGGLES */
+.stock-checkbox-container,
+.featured-checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.stock-toggle-input,
+.featured-toggle-input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.stock-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+}
+
+.stock-status-badge.available {
+  background: #E8F5E9;
+  color: #1B5E20;
+}
+
+.stock-status-badge.out {
+  background: #FFEBEE;
+  color: #C62828;
+}
+
+.featured-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+  background: #F3EFEA;
+  color: #7A6F65;
+  transition: all 0.2s ease;
+}
+
+.featured-status-badge.featured {
+  background: #FEF3D6;
+  color: #B45309;
+  border: 1px solid rgba(180, 83, 9, 0.25);
 }
 
 /* FORM CONTROLS */
@@ -915,84 +1074,200 @@ a {
   display: block;
 }
 
-/* INSTAGRAM SHOWCASE & GALLERY GRID */
-.instagram-showcase-section {
+/* INSTAGRAM FEED WIDGET (4-POST BOUTIQUE GRID) */
+.instagram-feed-section {
   max-width: 1200px;
-  margin: 5.5rem auto;
+  margin: 5rem auto;
   padding: 0 1.5rem;
 }
 
-.instagram-header {
-  text-align: center;
-  margin-bottom: 2.75rem;
+.instagram-widget-card {
+  background: #FFFFFF;
+  border-radius: 28px;
+  border: 1px solid rgba(226, 219, 208, 0.75);
+  box-shadow: 0 14px 45px -12px rgba(43, 33, 25, 0.08);
+  padding: 2.25rem;
+  overflow: hidden;
 }
 
-.instagram-pill-badge {
-  display: inline-flex;
+.instagram-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.insta-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.insta-avatar-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.insta-avatar {
+  width: 100%;
+  height: 100%;
+  background: #2E5A44;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insta-username-row {
+  display: flex;
   align-items: center;
   gap: 0.45rem;
-  background: rgba(46, 90, 68, 0.08);
-  color: var(--primary);
-  padding: 0.35rem 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.insta-username {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.2px;
+}
+
+.insta-verified-badge {
+  display: inline-flex;
+  align-items: center;
+}
+
+.insta-bio {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  max-width: 500px;
+}
+
+.btn-instagram-follow,
+.btn-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(45deg, #E1306C 0%, #FD1D1D 50%, #F56040 100%);
+  color: #FFFFFF !important;
+  padding: 0.7rem 1.45rem;
   border-radius: 99px;
-  font-size: 0.85rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
-  border: 1px solid rgba(46, 90, 68, 0.18);
+  font-size: 0.9rem;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(225, 48, 108, 0.28);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
 }
 
-.gallery-grid {
+.btn-instagram-follow:hover,
+.btn-instagram:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(225, 48, 108, 0.38);
+  color: #FFFFFF !important;
+}
+
+/* 4 INSTAGRAM POSTS GRID */
+.insta-posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.35rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 
-.gallery-item {
-  height: 270px;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(43, 33, 25, 0.08);
-  border: 1px solid rgba(226, 219, 208, 0.75);
+.insta-post-item {
   position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #EFEBE4;
   display: block;
-  background: #EBE5DB;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  text-decoration: none;
 }
 
-.gallery-item:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 36px -8px rgba(46, 90, 68, 0.2);
-}
-
-.gallery-item img {
+.insta-post-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.gallery-item:hover img {
+.insta-post-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(24, 49, 36, 0.72);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.insta-post-item:hover img {
   transform: scale(1.08);
 }
 
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(24, 49, 36, 0.88) 0%, rgba(24, 49, 36, 0.2) 55%, transparent 100%);
-  display: flex;
-  align-items: flex-end;
-  padding: 1.25rem;
-  color: #FFFFFF;
-  font-weight: 700;
-  font-size: 0.92rem;
-  gap: 0.45rem;
-  opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+.insta-post-item:hover .insta-post-overlay {
+  opacity: 1;
 }
 
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
+.insta-post-stats {
+  display: flex;
+  gap: 1.2rem;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.insta-post-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+@media (max-width: 900px) {
+  .insta-posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .instagram-widget-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 20px;
+  }
+  
+  .instagram-widget-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .btn-instagram-follow {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .insta-posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
 }
 
 /* DESKTOP & MOBILE HEADER BUTTONS */

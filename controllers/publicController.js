@@ -6,15 +6,34 @@ const settingsService = require('../services/settingsService');
  */
 const getHomePage = async (req, res) => {
   try {
-    const { data: featuredProducts } = await supabase
-      .from('products')
-      .select('*, categories(name)')
-      .eq('is_available', true)
-      .order('display_order', { ascending: true })
-      .limit(6);
+    const featuredIds = await settingsService.getFeaturedProductIds();
+    let featuredProducts = [];
 
-    const allTags = settingsService.getAllProductTags();
-    (featuredProducts || []).forEach(p => {
+    if (featuredIds && featuredIds.length > 0) {
+      const { data } = await supabase
+        .from('products')
+        .select('*, categories(name)')
+        .in('id', featuredIds);
+
+      if (data && data.length > 0) {
+        featuredProducts = featuredIds
+          .map(id => data.find(p => p.id === id))
+          .filter(Boolean);
+      }
+    }
+
+    // If no products were specifically selected, fallback to top products
+    if (featuredProducts.length === 0) {
+      const { data } = await supabase
+        .from('products')
+        .select('*, categories(name)')
+        .order('display_order', { ascending: true })
+        .limit(6);
+      featuredProducts = data || [];
+    }
+
+    const allTags = await settingsService.getAllProductTags();
+    featuredProducts.forEach(p => {
       p.tags = p.tags || allTags[p.id] || '';
     });
 
@@ -32,7 +51,7 @@ const getHomePage = async (req, res) => {
 };
 
 /**
- * Render Interactive Menu Page (Pinterest Style UI)
+ * Render Interactive Menu Page
  */
 const getMenuPage = async (req, res) => {
   try {
@@ -46,7 +65,7 @@ const getMenuPage = async (req, res) => {
       .select('*, categories(id, name, slug)')
       .order('display_order', { ascending: true });
 
-    const allTags = settingsService.getAllProductTags();
+    const allTags = await settingsService.getAllProductTags();
     (products || []).forEach(p => {
       p.tags = p.tags || allTags[p.id] || '';
     });

@@ -89,10 +89,21 @@
         </div>
       </div>
 
-      <div class="form-group" style="display: flex; gap: 1.5rem; margin-top: 1.5rem;">
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <input type="checkbox" id="is_available" name="is_available" <%= !product || product.is_available ? 'checked' : '' %> style="width: 18px; height: 18px;">
-          <label for="is_available" style="font-weight: 600; cursor: pointer;">Stokta Var (Menüde Görünsün)</label>
+      <div class="form-group" style="background: #FAF8F5; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-top: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem;">
+          <input type="checkbox" id="is_available" name="is_available" <%= !product || product.is_available ? 'checked' : '' %> style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;">
+          <label for="is_available" style="font-weight: 700; cursor: pointer;">
+            Stokta Var (Satışta)
+            <span style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted); display: block;">İşareti kaldırırsanız ürün sitede "Stokta Yok" olarak görünür ve fotoğrafı solar.</span>
+          </label>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.65rem; padding-top: 0.85rem; border-top: 1px dashed var(--border-light);">
+          <input type="checkbox" id="is_featured" name="is_featured" <%= product && product.is_featured ? 'checked' : '' %> style="width: 20px; height: 20px; accent-color: #B45309; cursor: pointer;">
+          <label for="is_featured" style="font-weight: 700; cursor: pointer; color: var(--accent-brown);">
+            ★ Ana Sayfa "Öne Çıkan Lezzetlerimiz" Vitrininde Göster
+            <span style="font-weight: 400; font-size: 0.82rem; color: var(--text-muted); display: block;">İşaretlediğiniz ürünler ana sayfanın lezzet vitrininde doğrudan gösterilir.</span>
+          </label>
         </div>
       </div>
 

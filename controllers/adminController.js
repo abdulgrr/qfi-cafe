@@ -59,6 +59,9 @@ const logout = (req, res) => {
 /**
  * Render Admin Dashboard
  */
+/**
+ * Render Admin Dashboard
+ */
 const getDashboard = async (req, res) => {
   try {
     const { data: products } = await supabase
@@ -70,6 +73,14 @@ const getDashboard = async (req, res) => {
       .from('categories')
       .select('*')
       .order('display_order', { ascending: true });
+
+    const featuredIds = await settingsService.getFeaturedProductIds();
+    const allTags = await settingsService.getAllProductTags();
+
+    (products || []).forEach(p => {
+      p.is_featured = featuredIds.includes(p.id);
+      p.tags = allTags[p.id] || '';
+    });
 
     res.render('admin/dashboard', {
       title: 'Yönetim Paneli | Qfi Cafe',
@@ -108,17 +119,18 @@ const getAddProductPage = async (req, res) => {
  */
 const createProduct = async (req, res) => {
   try {
-    const { name, category_id, description, price, is_available, display_order, tags } = req.body;
+    const { name, category_id, description, price, is_available, is_featured, display_order, tags } = req.body;
 
     let imageUrl = '';
     let cloudinaryId = '';
 
-    // Handle Cloudinary buffer upload if file is uploaded
     if (req.file) {
       const uploadResult = await uploadToCloudinary(req.file.buffer, 'qfi_cafe_menu');
       imageUrl = uploadResult.secure_url;
       cloudinaryId = uploadResult.public_id;
     }
+
+    const available = is_available === 'on' || is_available === 'true' || is_available === true;
 
     const newProd = {
       name,
@@ -127,21 +139,21 @@ const createProduct = async (req, res) => {
       price: parseFloat(price),
       image_url: imageUrl,
       cloudinary_public_id: cloudinaryId,
-      is_available: is_available === 'on' || is_available === 'true',
+      is_available: available,
       display_order: parseInt(display_order) || 0
     };
 
-    // Try inserting with tags first
-    let result = await supabase.from('products').insert([{ ...newProd, tags: tags || '' }]).select();
-    if (result.error && result.error.code === 'PGRST204') {
-      result = await supabase.from('products').insert([newProd]).select();
-    }
-
+    let result = await supabase.from('products').insert([newProd]).select();
     if (result.error) throw result.error;
 
     const insertedProduct = result.data && result.data[0];
-    if (insertedProduct && tags) {
-      settingsService.setProductTags(insertedProduct.id, tags);
+    if (insertedProduct) {
+      if (tags) {
+        await settingsService.setProductTags(insertedProduct.id, tags);
+      }
+      if (is_featured === 'on' || is_featured === 'true' || is_featured === true) {
+        await settingsService.toggleFeaturedProduct(insertedProduct.id, true);
+      }
     }
 
     res.redirect('/admin/dashboard');
@@ -162,7 +174,8 @@ const getEditProductPage = async (req, res) => {
 
     if (!product) return res.redirect('/admin/dashboard');
 
-    product.tags = product.tags || settingsService.getProductTags(id);
+    product.is_featured = await settingsService.isProductFeatured(id);
+    product.tags = await settingsService.getProductTags(id);
 
     res.render('admin/product-form', {
       title: 'Ürün Düzenle | Qfi Cafe Admin',
@@ -181,13 +194,12 @@ const getEditProductPage = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, category_id, description, price, is_available, display_order, tags, existing_image, existing_cloudinary_id } = req.body;
+    const { name, category_id, description, price, is_available, is_featured, display_order, tags, existing_image, existing_cloudinary_id } = req.body;
 
     let imageUrl = existing_image || '';
     let cloudinaryId = existing_cloudinary_id || '';
 
     if (req.file) {
-      // If new image uploaded, delete old image from Cloudinary
       if (existing_cloudinary_id) {
         await deleteFromCloudinary(existing_cloudinary_id);
       }
@@ -196,6 +208,8 @@ const updateProduct = async (req, res) => {
       cloudinaryId = uploadResult.public_id;
     }
 
+    const available = is_available === 'on' || is_available === 'true' || is_available === true;
+
     const updateData = {
       name,
       category_id,
@@ -203,17 +217,15 @@ const updateProduct = async (req, res) => {
       price: parseFloat(price),
       image_url: imageUrl,
       cloudinary_public_id: cloudinaryId,
-      is_available: is_available === 'on' || is_available === 'true',
+      is_available: available,
       display_order: parseInt(display_order) || 0
     };
 
-    settingsService.setProductTags(id, tags);
+    await settingsService.setProductTags(id, tags);
+    const shouldFeature = is_featured === 'on' || is_featured === 'true' || is_featured === true;
+    await settingsService.toggleFeaturedProduct(id, shouldFeature);
 
-    let result = await supabase.from('products').update({ ...updateData, tags: tags || '' }).eq('id', id);
-    if (result.error && result.error.code === 'PGRST204') {
-      result = await supabase.from('products').update(updateData).eq('id', id);
-    }
-
+    let result = await supabase.from('products').update(updateData).eq('id', id);
     if (result.error) throw result.error;
 
     res.redirect('/admin/dashboard');
@@ -230,7 +242,6 @@ const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Fetch product to get cloudinary_public_id
     const { data: product } = await supabase.from('products').select('cloudinary_public_id').eq('id', id).single();
     
     if (product && product.cloudinary_public_id) {
@@ -246,17 +257,57 @@ const deleteProduct = async (req, res) => {
 };
 
 /**
- * Toggle Product Availability AJAX/POST
+ * Toggle Product Availability (Stock Out / Stock In)
  */
 const toggleAvailability = async (req, res) => {
   try {
     const { id } = req.params;
-    const { is_available } = req.body;
+    let is_available;
+
+    if (req.body && req.body.is_available !== undefined) {
+      is_available = req.body.is_available === 'true' || req.body.is_available === true || req.body.is_available === 'on';
+    } else {
+      const { data: curr } = await supabase.from('products').select('is_available').eq('id', id).single();
+      is_available = curr ? !curr.is_available : true;
+    }
 
     await supabase.from('products').update({ is_available }).eq('id', id);
-    res.json({ success: true });
+
+    if (req.xhr || req.headers.accept?.includes('application/json') || req.is('json')) {
+      return res.json({ success: true, is_available });
+    }
+    res.redirect('/admin/dashboard');
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    console.error('Toggle stock error:', error);
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+      return res.status(500).json({ success: false, error: error.message });
+    }
+    res.redirect('/admin/dashboard');
+  }
+};
+
+/**
+ * Toggle Product Homepage Featured Status
+ */
+const toggleFeatured = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let desiredState;
+    if (req.body && req.body.is_featured !== undefined) {
+      desiredState = req.body.is_featured === 'true' || req.body.is_featured === true || req.body.is_featured === 'on';
+    }
+    const is_featured = await settingsService.toggleFeaturedProduct(id, desiredState);
+
+    if (req.xhr || req.headers.accept?.includes('application/json') || req.is('json')) {
+      return res.json({ success: true, is_featured });
+    }
+    res.redirect('/admin/dashboard');
+  } catch (error) {
+    console.error('Toggle featured error:', error);
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+      return res.status(500).json({ success: false, error: error.message });
+    }
+    res.redirect('/admin/dashboard');
   }
 };
 
@@ -375,6 +426,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
   toggleAvailability,
+  toggleFeatured,
   createCategory,
   updateCategory,
   deleteCategory,

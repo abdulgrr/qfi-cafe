@@ -326,14 +326,16 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
-          <div class="form-group">
-            <label class="form-label"><span class="location-badge">📍 Ana Sayfa Galeri</span> Başlık</label>
-            <input type="text" name="gallery_title" class="form-input" value="<%= settings.gallery_title || 'Qfi Cafe Atmosferi' %>">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span class="location-badge">📍 Ana Sayfa Galeri</span> Alt Başlık</label>
-            <input type="text" name="gallery_subtitle" class="form-input" value="<%= settings.gallery_subtitle || "Sıcak ahşap dokular, taze kahve kokusu ve Pendik'te huzurlu anlar" %>">
+        <div class="form-group" style="background: #FAF7F2; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-top: 1.25rem;">
+          <label class="form-label" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 0.4rem;">
+              <span class="location-badge">📍 Ana Sayfa</span> Canlı Instagram Widget Kodu (SnapWidget / Elfsight / Behold)
+            </span>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Iframe veya Script Kodu</span>
+          </label>
+          <textarea name="gallery_title" class="form-textarea" rows="3" placeholder='Örn: <iframe src="https://snapwidget.com/embed/..." ...></iframe> veya Elfsight script kodunuz'><%= (settings.gallery_title && !settings.gallery_title.startsWith('Qfi Cafe Atmosferi')) ? settings.gallery_title : '' %></textarea>
+          <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.45rem; line-height: 1.5;">
+            💡 <strong>Nasıl Çalışır?</strong> Instagram'ın güvenlik kuralları gereği harici sitelere anlık canlı akış üçüncü parti widget'lar (SnapWidget, Elfsight, Behold vb.) üzerinden bağlanır. Ücretsiz aldığınız widget kodunu buraya yapıştırdığınızda ana sayfanızda @qficafe hesabınızın en son paylaşımları otomatik ve canlı olarak görünür.
           </div>
         </div>
       </div>

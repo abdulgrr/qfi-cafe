@@ -116,30 +116,51 @@
       <div class="product-grid">
         <% featuredProducts.forEach(product => { %>
           <% 
+            const catName = product.categories ? product.categories.name : 'Özel Seçim';
             const isOutOfStock = !product.is_available;
-            const primaryTag = (product.tags && product.tags.trim()) ? product.tags.split(',')[0].trim() : null;
+            const tagList = (product.tags && product.tags.trim()) 
+              ? product.tags.split(',').map(t => t.trim()).filter(Boolean) 
+              : [];
           %>
-          <div class="product-card <%= isOutOfStock ? 'is-out-of-stock' : '' %>">
-            <div class="product-img-wrapper">
-              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img <%= isOutOfStock ? 'out-of-stock-img' : '' %>" loading="lazy">
+          <div class="product-card boutique-card <%= isOutOfStock ? 'is-out-of-stock' : '' %>">
+            <div class="boutique-img-wrapper">
+              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" 
+                   alt="<%= product.name %>" 
+                   class="boutique-img <%= isOutOfStock ? 'out-of-stock-img' : '' %>" 
+                   loading="lazy">
               
               <% if (isOutOfStock) { %>
                 <div class="out-of-stock-overlay-badge">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                   <span>Stokta Yok</span>
                 </div>
-              <% } else if (primaryTag) { %>
-                <div class="product-floating-tag">
-                  <%= primaryTag %>
-                </div>
               <% } %>
             </div>
-            <div class="product-details">
-              <div class="product-title-row">
-                <h3 class="product-name"><%= product.name %></h3>
-                <span class="product-price <%= isOutOfStock ? 'price-muted' : '' %>">₺<%= parseFloat(product.price).toFixed(2) %></span>
+            
+            <div class="boutique-card-body">
+              <div class="boutique-card-top-row">
+                <span class="boutique-cat-badge"><%= catName %></span>
+                <span class="boutique-price-badge <%= isOutOfStock ? 'price-muted' : '' %>">
+                  <span class="currency-sym">₺</span><%= parseFloat(product.price).toFixed(2) %>
+                </span>
               </div>
-              <p class="product-desc"><%= product.description || 'Özel hazırlanmış taze butik lezzet.' %></p>
+              
+              <h3 class="boutique-product-title"><%= product.name %></h3>
+              
+              <p class="boutique-product-desc">
+                <%= product.description || 'Özel çekirdek ve günlük taze malzemelerle hazırlanan butik lezzet.' %>
+              </p>
+              
+              <% if (tagList.length > 0) { %>
+                <div class="boutique-tags-row">
+                  <% tagList.forEach(tag => { %>
+                    <span class="boutique-tag-pill">
+                      <span class="tag-dot"></span>
+                      <%= tag %>
+                    </span>
+                  <% }) %>
+                </div>
+              <% } %>
             </div>
           </div>
         <% }) %>
@@ -176,76 +197,112 @@
     </div>
   </section>
 
-  <!-- INSTAGRAM FEED WIDGET (SON 4 POST) -->
+  <!-- INSTAGRAM FEED WIDGET (CANLI AKIŞ) -->
   <section class="instagram-feed-section">
-    <div class="instagram-widget-card">
-      <div class="instagram-widget-header">
-        <div class="insta-profile-info">
-          <div class="insta-avatar-ring">
-            <div class="insta-avatar">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+    <% 
+      const customWidgetCode = (settings.gallery_title && (settings.gallery_title.includes('<iframe') || settings.gallery_title.includes('<script') || settings.gallery_title.includes('elfsight') || settings.gallery_title.includes('snapwidget') || settings.gallery_title.includes('behold') || settings.gallery_title.includes('widget'))) ? settings.gallery_title : null;
+    %>
+
+    <% if (customWidgetCode) { %>
+      <!-- CANLI WIDGET KODU (ADMIN PANELİNDEN EKLENEN SNAPWIDGET / ELFSIGHT / BEHOLD) -->
+      <div class="instagram-widget-card" style="padding: 1.75rem;">
+        <div class="instagram-widget-header" style="margin-bottom: 1.25rem;">
+          <div class="insta-profile-info">
+            <div class="insta-avatar-ring">
+              <div class="insta-avatar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              </div>
+            </div>
+            <div>
+              <div class="insta-username-row">
+                <h3 class="insta-username">qficafe</h3>
+                <span class="insta-verified-badge" title="Doğrulanmış Profil">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
+                </span>
+              </div>
+              <p class="insta-bio">Qfi Cafe & Bakery • Pendik / İstanbul • Canlı Instagram Akışı</p>
             </div>
           </div>
-          <div>
-            <div class="insta-username-row">
-              <h3 class="insta-username">qficafe</h3>
-              <span class="insta-verified-badge" title="Doğrulanmış Profil">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
+          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            <span>Instagram'da Takip Et</span>
+          </a>
+        </div>
+        <div class="live-instagram-embed-box" style="border-radius: 16px; overflow: hidden; width: 100%;">
+          <%- customWidgetCode %>
+        </div>
+      </div>
+    <% } else { %>
+      <!-- CANLI INSTAGRAM PROFİL & POST BAĞLANTISI -->
+      <div class="instagram-widget-card">
+        <div class="instagram-widget-header">
+          <div class="insta-profile-info">
+            <div class="insta-avatar-ring">
+              <div class="insta-avatar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              </div>
+            </div>
+            <div>
+              <div class="insta-username-row">
+                <h3 class="insta-username">qficafe</h3>
+                <span class="insta-verified-badge" title="Doğrulanmış Profil">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
+                </span>
+              </div>
+              <p class="insta-bio">Qfi Cafe & Bakery • Pendik / İstanbul • 3. Nesil Kahve & Günlük Fırın</p>
+            </div>
+          </div>
+          
+          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            <span>Instagram'da Aç (@qficafe)</span>
+          </a>
+        </div>
+
+        <!-- 4 DIRECT POSTS CONNECTED TO INSTAGRAM -->
+        <div class="insta-posts-grid">
+          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80" alt="Espresso Bar" loading="lazy">
+            <div class="insta-post-overlay">
+              <span class="insta-view-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram'da Gör
               </span>
             </div>
-            <p class="insta-bio">Qfi Cafe & Bakery • Pendik / İstanbul • 3. Nesil Kahve & Günlük Fırın</p>
-          </div>
+          </a>
+
+          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Fresh Bakery Croissant" loading="lazy">
+            <div class="insta-post-overlay">
+              <span class="insta-view-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram'da Gör
+              </span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
+            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Pour over V60" loading="lazy">
+            <div class="insta-post-overlay">
+              <span class="insta-view-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram'da Gör
+              </span>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Cafe Seating Atmosphere" loading="lazy">
+            <div class="insta-post-overlay">
+              <span class="insta-view-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram'da Gör
+              </span>
+            </div>
+          </a>
         </div>
-        
-        <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-          <span>Instagram'da Takip Et</span>
-        </a>
       </div>
-
-      <!-- 4 INSTAGRAM POSTS GRID -->
-      <div class="insta-posts-grid">
-        <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-          <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80" alt="Espresso Bar" loading="lazy">
-          <div class="insta-post-overlay">
-            <div class="insta-post-stats">
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 214</span>
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 18</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-          <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Fresh Bakery Croissant" loading="lazy">
-          <div class="insta-post-overlay">
-            <div class="insta-post-stats">
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 328</span>
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 29</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Pour over V60" loading="lazy">
-          <div class="insta-post-overlay">
-            <div class="insta-post-stats">
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 195</span>
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 12</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Cafe Seating Atmosphere" loading="lazy">
-          <div class="insta-post-overlay">
-            <div class="insta-post-stats">
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 276</span>
-              <span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> 24</span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
+    <% } %>
   </section>
 
   <!-- LOCATION CTA BANNER -->

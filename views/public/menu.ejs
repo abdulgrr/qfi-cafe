@@ -51,31 +51,57 @@
       <div class="product-grid" id="product-grid-container">
         <% products.forEach(product => { %>
           <% 
+            const catName = product.categories ? product.categories.name : 'Özel Seçim';
             const catSlug = product.categories ? product.categories.slug : '';
             const isOutOfStock = !product.is_available;
+            const tagList = (product.tags && product.tags.trim()) 
+              ? product.tags.split(',').map(t => t.trim()).filter(Boolean) 
+              : [];
           %>
-          <div class="product-card <%= isOutOfStock ? 'is-out-of-stock' : '' %>" data-category-slug="<%= catSlug %>" data-product-name="<%= product.name.toLowerCase() %>" data-product-desc="<%= (product.description || '').toLowerCase() %>">
-            <div class="product-img-wrapper">
-              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" alt="<%= product.name %>" class="product-img <%= isOutOfStock ? 'out-of-stock-img' : '' %>" loading="lazy">
+          <div class="product-card boutique-card <%= isOutOfStock ? 'is-out-of-stock' : '' %>" 
+               data-category-slug="<%= catSlug %>" 
+               data-product-name="<%= product.name.toLowerCase() %>" 
+               data-product-desc="<%= (product.description || '').toLowerCase() %>"
+               data-product-tags="<%= (product.tags || '').toLowerCase() %>">
+            
+            <div class="boutique-img-wrapper">
+              <img src="<%= product.image_url || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600' %>" 
+                   alt="<%= product.name %>" 
+                   class="boutique-img <%= isOutOfStock ? 'out-of-stock-img' : '' %>" 
+                   loading="lazy">
               
               <% if (isOutOfStock) { %>
                 <div class="out-of-stock-overlay-badge">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                   <span>Stokta Yok</span>
                 </div>
-              <% } else if (product.tags && product.tags.trim()) { %>
-                <div class="product-floating-tag">
-                  <%= product.tags.split(',')[0].trim() %>
-                </div>
               <% } %>
             </div>
             
-            <div class="product-details">
-              <div class="product-title-row">
-                <h3 class="product-name"><%= product.name %></h3>
-                <span class="product-price <%= isOutOfStock ? 'price-muted' : '' %>">₺<%= parseFloat(product.price).toFixed(2) %></span>
+            <div class="boutique-card-body">
+              <div class="boutique-card-top-row">
+                <span class="boutique-cat-badge"><%= catName %></span>
+                <span class="boutique-price-badge <%= isOutOfStock ? 'price-muted' : '' %>">
+                  <span class="currency-sym">₺</span><%= parseFloat(product.price).toFixed(2) %>
+                </span>
               </div>
-              <p class="product-desc"><%= product.description || 'Özel hazırlanmış taze butik lezzet.' %></p>
+              
+              <h3 class="boutique-product-title"><%= product.name %></h3>
+              
+              <p class="boutique-product-desc">
+                <%= product.description || 'Özel çekirdek ve günlük malzemelerle taze hazırlanan butik lezzet.' %>
+              </p>
+              
+              <% if (tagList.length > 0) { %>
+                <div class="boutique-tags-row">
+                  <% tagList.forEach(tag => { %>
+                    <span class="boutique-tag-pill">
+                      <span class="tag-dot"></span>
+                      <%= tag %>
+                    </span>
+                  <% }) %>
+                </div>
+              <% } %>
             </div>
           </div>
         <% }) %>

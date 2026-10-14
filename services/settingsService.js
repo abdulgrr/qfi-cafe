@@ -191,6 +191,18 @@ async function updateSettings(fields, files = {}) {
     }
   }
 
+  // Preserve product metadata stored in gallery_subtitle ({ featured_ids, tags })
+  if (current.gallery_subtitle && current.gallery_subtitle.trim().startsWith('{')) {
+    if (!fields.gallery_subtitle || !fields.gallery_subtitle.trim().startsWith('{')) {
+      updated.gallery_subtitle = current.gallery_subtitle;
+    }
+  }
+
+  // Handle explicit instagram_widget_code field mapped to gallery_title
+  if (fields.instagram_widget_code !== undefined) {
+    updated.gallery_title = typeof fields.instagram_widget_code === 'string' ? fields.instagram_widget_code.trim() : '';
+  }
+
   // Handle logo removal
   if (fields.remove_logo === 'true' || fields.remove_logo === '1') {
     updated.logo_url = '';

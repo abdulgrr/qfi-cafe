@@ -22,16 +22,6 @@ const getHomePage = async (req, res) => {
       }
     }
 
-    // If no products were specifically selected, fallback to top products
-    if (featuredProducts.length === 0) {
-      const { data } = await supabase
-        .from('products')
-        .select('*, categories(name)')
-        .order('display_order', { ascending: true })
-        .limit(6);
-      featuredProducts = data || [];
-    }
-
     const allTags = await settingsService.getAllProductTags();
     featuredProducts.forEach(p => {
       p.tags = p.tags || allTags[p.id] || '';

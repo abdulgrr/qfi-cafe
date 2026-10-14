@@ -15,9 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const cardCategory = card.getAttribute('data-category-slug');
       const cardName = card.getAttribute('data-product-name') || '';
       const cardDesc = card.getAttribute('data-product-desc') || '';
+      const cardTags = card.getAttribute('data-product-tags') || '';
 
       const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
-      const matchesSearch = !searchQuery || cardName.includes(searchQuery) || cardDesc.includes(searchQuery);
+      const matchesSearch = !searchQuery || cardName.includes(searchQuery) || cardDesc.includes(searchQuery) || cardTags.includes(searchQuery);
 
       if (matchesCategory && matchesSearch) {
         card.style.display = 'flex';

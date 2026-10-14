@@ -233,73 +233,34 @@
         </div>
       </div>
     <% } else { %>
-      <!-- CANLI INSTAGRAM PROFİL & POST BAĞLANTISI -->
-      <div class="instagram-widget-card">
-        <div class="instagram-widget-header">
-          <div class="insta-profile-info">
-            <div class="insta-avatar-ring">
-              <div class="insta-avatar">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-              </div>
-            </div>
-            <div>
-              <div class="insta-username-row">
-                <h3 class="insta-username">qficafe</h3>
-                <span class="insta-verified-badge" title="Doğrulanmış Profil">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
-                </span>
-              </div>
-              <p class="insta-bio">Qfi Cafe & Bakery • Pendik / İstanbul • 3. Nesil Kahve & Günlük Fırın</p>
+      <!-- CANLI INSTAGRAM PROFİL VİTRİNİ (SIFIR STOK RESİM) -->
+      <div class="instagram-widget-card instagram-profile-banner">
+        <div class="instagram-banner-inner">
+          <div class="insta-avatar-ring large">
+            <div class="insta-avatar">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
             </div>
           </div>
           
-          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-            <span>Instagram'da Aç (@qficafe)</span>
-          </a>
-        </div>
-
-        <!-- 4 DIRECT POSTS CONNECTED TO INSTAGRAM -->
-        <div class="insta-posts-grid">
-          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80" alt="Espresso Bar" loading="lazy">
-            <div class="insta-post-overlay">
-              <span class="insta-view-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                Instagram'da Gör
+          <div class="instagram-banner-content">
+            <div class="insta-username-row">
+              <h3 class="insta-username" style="font-size: 1.6rem;">@qficafe</h3>
+              <span class="insta-verified-badge" title="Doğrulanmış Profil">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
               </span>
             </div>
-          </a>
-
-          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Fresh Bakery Croissant" loading="lazy">
-            <div class="insta-post-overlay">
-              <span class="insta-view-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                Instagram'da Gör
-              </span>
+            
+            <p class="insta-bio" style="font-size: 1.05rem; max-width: 620px; margin: 0.5rem 0 1.5rem; line-height: 1.6;">
+              Günlük taze kavrulan kahvelerimiz, fırından yeni çıkan kruvasanlarımız, özel tatlılarımız ve samimi atmosferimiz için bizi Instagram'da takip edin.
+            </p>
+            
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram" style="padding: 0.85rem 1.85rem; font-size: 0.98rem; box-shadow: 0 8px 24px rgba(225, 48, 108, 0.35);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram'da Canlı Gönderileri Gör & Takip Et
+              </a>
             </div>
-          </a>
-
-          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80" alt="Pour over V60" loading="lazy">
-            <div class="insta-post-overlay">
-              <span class="insta-view-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                Instagram'da Gör
-              </span>
-            </div>
-          </a>
-
-          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="insta-post-item" title="Qfi Cafe Instagram Postu">
-            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Cafe Seating Atmosphere" loading="lazy">
-            <div class="insta-post-overlay">
-              <span class="insta-view-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                Instagram'da Gör
-              </span>
-            </div>
-          </a>
+          </div>
         </div>
       </div>
     <% } %>

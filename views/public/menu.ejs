@@ -80,7 +80,6 @@
             
             <div class="boutique-card-body">
               <div class="boutique-card-top-row">
-                <span class="boutique-cat-badge"><%= catName %></span>
                 <span class="boutique-price-badge <%= isOutOfStock ? 'price-muted' : '' %>">
                   <span class="currency-sym">₺</span><%= parseFloat(product.price).toFixed(2) %>
                 </span>
@@ -95,9 +94,9 @@
               <% if (tagList.length > 0) { %>
                 <div class="boutique-tags-row">
                   <% tagList.forEach(tag => { %>
-                    <span class="boutique-tag-pill">
+                    <span class="boutique-tag-pill" title="<%= tag %>">
                       <span class="tag-dot"></span>
-                      <%= tag %>
+                      <span class="tag-text"><%= tag %></span>
                     </span>
                   <% }) %>
                 </div>

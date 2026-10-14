@@ -654,7 +654,7 @@ a {
 .boutique-card-top-row,
 .product-title-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 0.65rem;
 }
@@ -736,6 +736,13 @@ a {
   padding: 0.22rem 0.6rem;
   border-radius: 99px;
   border: 1px solid rgba(197, 155, 99, 0.22);
+  min-width: 0;
+}
+
+.boutique-tag-pill .tag-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .boutique-tag-pill .tag-dot {
@@ -743,6 +750,7 @@ a {
   height: 5px;
   border-radius: 50%;
   background: #C59B63;
+  flex-shrink: 0;
 }
 
 /* Out of stock product state */
@@ -1963,7 +1971,7 @@ a {
   /* 2-COLUMN APP-STYLE QR MENU GRID */
   .product-section {
     margin: 1rem auto 3rem;
-    padding: 0 0.85rem;
+    padding: 0 0.55rem !important;
   }
 
   .section-title-box {
@@ -1992,12 +2000,12 @@ a {
 
   .product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.75rem !important;
+    gap: 0.55rem !important;
   }
 
   .boutique-card,
   .product-card {
-    border-radius: 16px !important;
+    border-radius: 14px !important;
     box-shadow: 0 4px 14px rgba(36, 26, 20, 0.05) !important;
   }
 
@@ -2026,24 +2034,20 @@ a {
 
   .boutique-card-body,
   .product-details {
-    padding: 0.35rem 0.65rem 0.75rem !important;
+    padding: 0.35rem 0.45rem 0.65rem !important;
   }
 
   .boutique-card-top-row,
   .product-title-row {
+    display: flex !important;
+    justify-content: flex-end !important;
     margin-bottom: 0.25rem !important;
-  }
-
-  .boutique-cat-badge {
-    font-size: 0.62rem !important;
-    padding: 0.15rem 0.45rem !important;
-    letter-spacing: 0.3px !important;
   }
 
   .boutique-price-badge,
   .product-price {
     font-size: 0.88rem !important;
-    padding: 0.18rem 0.5rem !important;
+    padding: 0.18rem 0.55rem !important;
     font-weight: 800 !important;
   }
 
@@ -2067,19 +2071,43 @@ a {
     min-height: 2em !important;
   }
 
+  /* FORCING 2 TAGS ON 1 SINGLE ROW SIDE-BY-SIDE ON MOBILE */
   .boutique-tags-row {
-    gap: 0.25rem !important;
-    padding-top: 0.4rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* STRICTLY 1 ROW */
+    gap: 0.2rem !important;
+    padding-top: 0.35rem !important;
+    width: 100% !important;
+    overflow: hidden !important;
   }
 
   .boutique-tag-pill {
-    font-size: 0.64rem !important;
-    padding: 0.14rem 0.42rem !important;
+    flex: 1 1 0 !important; /* 2 tags share row 50/50 */
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 0.58rem !important;
+    padding: 0.12rem 0.25rem !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    border-radius: 6px !important;
+    letter-spacing: -0.2px !important;
   }
 
   .boutique-tag-pill .tag-dot {
-    width: 4px !important;
-    height: 4px !important;
+    width: 3.5px !important;
+    height: 3.5px !important;
+    flex-shrink: 0 !important;
+    margin-right: 2px !important;
+  }
+
+  .boutique-tag-pill .tag-text {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
   }
 
   /* SPOTLIGHT BANNER ON MOBILE */

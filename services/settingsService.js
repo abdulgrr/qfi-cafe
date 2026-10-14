@@ -264,8 +264,21 @@ async function updateSettings(fields, files = {}) {
   return updated;
 }
 
+const defaultInstagramPosts = [
+  'https://www.instagram.com/p/DZDmlKRseo2/',
+  'https://www.instagram.com/reel/Da22bUnMZAg/',
+  'https://www.instagram.com/reel/DZctUmzsvjY/',
+  'https://www.instagram.com/p/DZPG2M_MQg6/'
+];
+
+function cleanInstagramUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  const match = url.trim().match(/(https?:\/\/(?:www\.)?instagram\.com\/(?:p|reel|tv)\/[a-zA-Z0-9_-]+)/i);
+  return match ? match[1] + '/' : url.trim();
+}
+
 /**
- * Helper: Product Metadata Store (featured_ids & tags)
+ * Helper: Product Metadata Store (featured_ids, tags, instagram_posts)
  * Persisted securely in Supabase site_settings and local fallback
  */
 async function getProductMeta() {
@@ -277,21 +290,27 @@ async function getProductMeta() {
         const parsed = JSON.parse(trimmed);
         return {
           featured_ids: Array.isArray(parsed.featured_ids) ? parsed.featured_ids : [],
-          tags: typeof parsed.tags === 'object' && parsed.tags !== null ? parsed.tags : {}
+          tags: typeof parsed.tags === 'object' && parsed.tags !== null ? parsed.tags : {},
+          instagram_posts: Array.isArray(parsed.instagram_posts) && parsed.instagram_posts.length > 0
+            ? parsed.instagram_posts
+            : [...defaultInstagramPosts]
         };
       }
     }
   } catch (e) {
     console.warn('Error reading product meta:', e.message);
   }
-  return { featured_ids: [], tags: {} };
+  return { featured_ids: [], tags: {}, instagram_posts: [...defaultInstagramPosts] };
 }
 
 async function saveProductMeta(meta) {
   try {
     const jsonStr = JSON.stringify({
       featured_ids: Array.isArray(meta.featured_ids) ? meta.featured_ids : [],
-      tags: typeof meta.tags === 'object' && meta.tags !== null ? meta.tags : {}
+      tags: typeof meta.tags === 'object' && meta.tags !== null ? meta.tags : {},
+      instagram_posts: Array.isArray(meta.instagram_posts) && meta.instagram_posts.length > 0
+        ? meta.instagram_posts
+        : [...defaultInstagramPosts]
     });
 
     try {
@@ -309,6 +328,43 @@ async function saveProductMeta(meta) {
     console.error('Error saving product meta:', e.message);
     return false;
   }
+}
+
+async function getInstagramPosts() {
+  const meta = await getProductMeta();
+  return meta.instagram_posts;
+}
+
+async function saveInstagramPosts(postsArray) {
+  const meta = await getProductMeta();
+  const cleaned = (Array.isArray(postsArray) ? postsArray : [])
+    .map(cleanInstagramUrl)
+    .filter(Boolean)
+    .slice(0, 4);
+
+  while (cleaned.length < 4) {
+    cleaned.push(defaultInstagramPosts[cleaned.length]);
+  }
+
+  meta.instagram_posts = cleaned;
+  await saveProductMeta(meta);
+  return cleaned;
+}
+
+/**
+ * Push new Instagram post to Position 1 (FIFO queue):
+ * - Prepends to start
+ * - Other posts shift down
+ * - 4th post drops off
+ */
+async function pushInstagramPost(newUrl) {
+  const cleanedUrl = cleanInstagramUrl(newUrl);
+  if (!cleanedUrl) return await getInstagramPosts();
+
+  const current = await getInstagramPosts();
+  const filtered = current.filter(u => u !== cleanedUrl);
+  const updated = [cleanedUrl, ...filtered].slice(0, 4);
+  return await saveInstagramPosts(updated);
 }
 
 async function getFeaturedProductIds() {
@@ -380,5 +436,9 @@ module.exports = {
   getAllProductTags,
   setProductTags,
   getProductTags,
+  getInstagramPosts,
+  saveInstagramPosts,
+  pushInstagramPost,
+  cleanInstagramUrl,
   checkSupabaseTableStatus
 };

@@ -48,4 +48,8 @@ router.post(
   adminController.updateSiteSettings
 );
 
+// Instagram Posts Queue & Reorder Management
+router.post('/instagram/add-post', adminController.addInstagramPost);
+router.post('/instagram/update-posts', adminController.updateInstagramPosts);
+
 module.exports = router;

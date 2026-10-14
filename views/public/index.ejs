@@ -198,72 +198,71 @@
   </section>
 
   <!-- INSTAGRAM FEED WIDGET (CANLI AKIŞ) -->
-  <section class="instagram-feed-section">
-    <% 
-      const customWidgetCode = (settings.gallery_title && (settings.gallery_title.includes('<iframe') || settings.gallery_title.includes('<script') || settings.gallery_title.includes('elfsight') || settings.gallery_title.includes('snapwidget') || settings.gallery_title.includes('behold') || settings.gallery_title.includes('widget'))) ? settings.gallery_title : null;
-    %>
-
-    <% if (customWidgetCode) { %>
-      <!-- CANLI WIDGET KODU (ADMIN PANELİNDEN EKLENEN SNAPWIDGET / ELFSIGHT / BEHOLD) -->
-      <div class="instagram-widget-card" style="padding: 1.75rem;">
-        <div class="instagram-widget-header" style="margin-bottom: 1.25rem;">
-          <div class="insta-profile-info">
-            <div class="insta-avatar-ring">
-              <div class="insta-avatar">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-              </div>
-            </div>
-            <div>
-              <div class="insta-username-row">
-                <h3 class="insta-username">qficafe</h3>
-                <span class="insta-verified-badge" title="Doğrulanmış Profil">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
-                </span>
-              </div>
-              <p class="insta-bio">Qfi Cafe & Bakery • Pendik / İstanbul • Canlı Instagram Akışı</p>
-            </div>
-          </div>
-          <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-            <span>Instagram'da Takip Et</span>
-          </a>
-        </div>
-        <div class="live-instagram-embed-box" style="border-radius: 16px; overflow: hidden; width: 100%;">
-          <%- customWidgetCode %>
-        </div>
-      </div>
-    <% } else { %>
-      <!-- CANLI INSTAGRAM PROFİL VİTRİNİ (SIFIR STOK RESİM) -->
-      <div class="instagram-widget-card instagram-profile-banner">
-        <div class="instagram-banner-inner">
-          <div class="insta-avatar-ring large">
+  <section class="instagram-feed-section" id="instagram-feed">
+    <div class="instagram-widget-card" style="padding: 2.5rem 2rem;">
+      <div class="instagram-widget-header" style="margin-bottom: 2rem;">
+        <div class="insta-profile-info">
+          <div class="insta-avatar-ring">
             <div class="insta-avatar">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #FFFFFF;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
             </div>
           </div>
-          
-          <div class="instagram-banner-content">
+          <div>
             <div class="insta-username-row">
-              <h3 class="insta-username" style="font-size: 1.6rem;">@qficafe</h3>
+              <h3 class="insta-username">qficafe</h3>
               <span class="insta-verified-badge" title="Doğrulanmış Profil">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="#3897F0"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9" stroke="#FFFFFF" stroke-width="2.5" fill="none"/></svg>
               </span>
             </div>
-            
-            <p class="insta-bio" style="font-size: 1.05rem; max-width: 620px; margin: 0.5rem 0 1.5rem; line-height: 1.6;">
-              Günlük taze kavrulan kahvelerimiz, fırından yeni çıkan kruvasanlarımız, özel tatlılarımız ve samimi atmosferimiz için bizi Instagram'da takip edin.
-            </p>
-            
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-              <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram" style="padding: 0.85rem 1.85rem; font-size: 0.98rem; box-shadow: 0 8px 24px rgba(225, 48, 108, 0.35);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                Instagram'da Canlı Gönderileri Gör & Takip Et
-              </a>
-            </div>
+            <p class="insta-bio">Qfi Cafe & Bakery • Pendik / İstanbul • En Son Paylaşımlarımız</p>
           </div>
         </div>
+        <a href="https://www.instagram.com/qficafe/" target="_blank" rel="noopener noreferrer" class="btn-instagram-follow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <span>Instagram'da Takip Et</span>
+        </a>
       </div>
-    <% } %>
+
+      <% 
+        const postsList = (typeof instagramPosts !== 'undefined' && instagramPosts && instagramPosts.length > 0) 
+          ? instagramPosts 
+          : [
+              'https://www.instagram.com/p/DZDmlKRseo2/',
+              'https://www.instagram.com/reel/Da22bUnMZAg/',
+              'https://www.instagram.com/reel/DZctUmzsvjY/',
+              'https://www.instagram.com/p/DZPG2M_MQg6/'
+            ];
+      %>
+
+      <!-- 4 CANLI INSTAGRAM GÖNDERİSİ -->
+      <div class="instagram-embeds-grid">
+        <% postsList.forEach(function(postUrl, index) { %>
+          <% if (postUrl && postUrl.trim()) { %>
+            <div class="instagram-embed-card">
+              <blockquote class="instagram-media" data-instgrm-permalink="<%= postUrl %>" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:14px; box-shadow:0 4px 18px rgba(0,0,0,0.06); margin:0 auto; width:100%; min-width:260px; max-width:380px; padding:0;">
+                <div style="padding:16px;">
+                  <a href="<%= postUrl %>" style="background:#FFFFFF; line-height:0; padding:0; text-align:center; text-decoration:none; width:100%; display:block;" target="_blank" rel="noopener noreferrer">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                      <div style="background-color:#EFEFEF; border-radius:50%; width:36px; height:36px; flex-shrink:0;"></div>
+                      <div style="text-align:left;">
+                        <div style="background-color:#EFEFEF; border-radius:4px; height:12px; width:90px; margin-bottom:6px;"></div>
+                        <div style="background-color:#EFEFEF; border-radius:4px; height:10px; width:60px;"></div>
+                      </div>
+                    </div>
+                    <div style="background:#FAF7F2; border-radius:8px; padding:32px 16px; margin-bottom:12px; text-align:center;">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C88E4C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                      <div style="color:#6B5E51; font-size:13px; font-weight:600;">Instagram Gönderisi #<%= index + 1 %></div>
+                    </div>
+                    <div style="color:#C88E4C; font-size:13px; font-weight:700;">Instagram'da Görüntüle &rarr;</div>
+                  </a>
+                </div>
+              </blockquote>
+            </div>
+          <% } %>
+        <% }); %>
+      </div>
+      <script async src="//www.instagram.com/embed.js"></script>
+    </div>
   </section>
 
   <!-- LOCATION CTA BANNER -->

@@ -27,15 +27,19 @@ const getHomePage = async (req, res) => {
       p.tags = p.tags || allTags[p.id] || '';
     });
 
+    const instagramPosts = await settingsService.getInstagramPosts();
+
     res.render('public/index', {
       title: 'Qfi Cafe | Pendik Butik Cafe & Lezzet Deneyimi',
-      featuredProducts: featuredProducts || []
+      featuredProducts: featuredProducts || [],
+      instagramPosts: instagramPosts || []
     });
   } catch (error) {
     console.error('Home controller error:', error);
     res.render('public/index', {
       title: 'Qfi Cafe | Pendik Butik Cafe',
-      featuredProducts: []
+      featuredProducts: [],
+      instagramPosts: []
     });
   }
 };

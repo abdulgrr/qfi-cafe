@@ -76,7 +76,8 @@
     <button type="button" class="tab-btn" onclick="switchTab('tab-hero')">2. Ana Sayfa & Slaytlar</button>
     <button type="button" class="tab-btn" onclick="switchTab('tab-features')">3. Özellikler & Kampanya</button>
     <button type="button" class="tab-btn" onclick="switchTab('tab-pages')">4. Menü & Hakkımızda</button>
-    <button type="button" class="tab-btn" onclick="switchTab('tab-contact')">5. İletişim & Konum</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-instagram')">5. Instagram Vitrini</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tab-contact')">6. İletişim & Konum</button>
   </div>
 
   <form id="settingsForm" action="/admin/settings" method="POST" enctype="multipart/form-data">
@@ -446,7 +447,7 @@
     </div>
 
     <!-- STICKY BOTTOM SAVE ACTION BAR -->
-    <div style="position: sticky; bottom: 1.5rem; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); padding: 1.25rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; z-index: 50; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;">
+    <div id="generalSaveBar" style="position: sticky; bottom: 1.5rem; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); padding: 1.25rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; z-index: 50; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;">
       <div style="color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         Yaptığınız tüm değişikliklerin sitede aktif olması için butona basınız.
@@ -458,6 +459,153 @@
     </div>
 
   </form>
+
+  <!-- TAB 5: INSTAGRAM VİTRİNİ & GÖNDERİ YÖNETİMİ (KAYDIRMALI KUYRUK & KOLAY SIRALAMA) -->
+  <div id="tab-instagram" class="settings-tab-pane">
+    
+    <!-- HERO BANNER -->
+    <div style="background: linear-gradient(135deg, #FAF4ED 0%, #FFFFFF 100%); border: 1.5px solid #F3DFC8; border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(225, 48, 108, 0.06);">
+      <div style="display: flex; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+        <div style="width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(45deg, #F09433, #E6683C, #DC2743, #CC2366, #BC1888); display: flex; align-items: center; justify-content: center; color: #FFF; flex-shrink: 0; box-shadow: 0 4px 14px rgba(220, 39, 67, 0.35);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </div>
+        <div style="flex: 1; min-width: 260px;">
+          <h3 style="font-size: 1.35rem; color: #3A2E2B; margin: 0 0 0.35rem; font-family: var(--font-serif);">
+            Canlı Instagram Vitrini & Otomatik Sıralama
+          </h3>
+          <p style="color: #6B5E51; font-size: 0.92rem; line-height: 1.6; margin: 0;">
+            Sitenizin ana sayfasındaki 4 canlı gönderiyi buradan kolayca yönetebilirsiniz. <strong>Yeni bir gönderi paylaştığınızda sadece linkini yapıştırın</strong>; sistem yeni gönderiyi <strong>otomatik olarak 1. sıraya</strong> koyar, diğerlerini aşağı kaydırır ve en sondaki (4.) gönderiyi otomatik olarak vitrinden çıkarır!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KART 1: HIZLI YENİ GÖNDERİ EKLE (OTOMATİK 1. SIRAYA KAYDIRIR) -->
+    <div class="admin-card" style="border: 2px solid #E6683C; background: #FFFDFB; margin-bottom: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+        <h4 style="font-size: 1.15rem; color: #C2410C; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Hızlı Yeni Gönderi Ekle (Otomatik 1. Sıraya Geçer)
+        </h4>
+        <span style="background: #FFEDD5; color: #9A3412; font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 99px;">
+          Otomatik Kaydırmalı
+        </span>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem; line-height: 1.5;">
+        Instagram'da yeni bir post veya reels paylaştığınızda linkini buraya yapıştırıp <strong>"En Başa Ekle"</strong> butonuna basın. Tek tek link kopyalamanıza gerek kalmadan gönderi en başa yerleşir, 4. gönderi otomatik silinir.
+      </p>
+
+      <form action="/admin/instagram/add-post" method="POST" id="formAddInstagramPost" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 280px; position: relative;">
+          <input 
+            type="url" 
+            name="post_url" 
+            id="new_post_url_input" 
+            class="form-input" 
+            placeholder="Örn: https://www.instagram.com/p/... veya https://www.instagram.com/reel/..." 
+            required
+            style="padding-left: 2.5rem; font-size: 0.95rem; border-color: #FDBA74;"
+          >
+          <span style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: #EA580C; display: flex;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </span>
+        </div>
+        <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%); border: none; padding: 0.75rem 1.6rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          En Başa Ekle (Otomatik Kaydır)
+        </button>
+      </form>
+    </div>
+
+    <!-- KART 2: MEVCUT 4 GÖNDERİ & MANUEL SIRALAMA -->
+    <div class="admin-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h4 style="font-size: 1.15rem; color: var(--primary); margin: 0 0 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Canlı Sitedeki 4 Gönderi & Sıralama
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">
+            Gönderilerin yerini ⬆️ ve ⬇️ oklarına basarak tek tıkla değiştirebilir ya da linkleri elle düzenleyebilirsiniz.
+          </p>
+        </div>
+        <span style="font-size: 0.85rem; color: var(--text-muted); background: var(--bg-cream); padding: 0.35rem 0.75rem; border-radius: 6px;">
+          Toplam: <strong>4 Gönderi</strong>
+        </span>
+      </div>
+
+      <form action="/admin/instagram/update-posts" method="POST" id="formUpdateInstagramPosts">
+        <div id="instagramPostsList" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+          <% 
+            const currentPosts = (typeof instagramPosts !== 'undefined' && instagramPosts && instagramPosts.length > 0) 
+              ? instagramPosts 
+              : [
+                  'https://www.instagram.com/p/DZDmlKRseo2/',
+                  'https://www.instagram.com/reel/Da22bUnMZAg/',
+                  'https://www.instagram.com/reel/DZctUmzsvjY/',
+                  'https://www.instagram.com/p/DZPG2M_MQg6/'
+                ];
+            
+            // Always guarantee 4 slots
+            for (let i = 0; i < 4; i++) {
+              const postUrl = currentPosts[i] || '';
+          %>
+            <div class="insta-post-row" data-index="<%= i %>" style="display: flex; align-items: center; gap: 0.75rem; background: #FAF8F5; padding: 0.85rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); transition: background 0.2s;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: #FFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">
+                <%= i + 1 %>
+              </div>
+
+              <div style="flex: 1; min-width: 220px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                  <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">
+                    <%= i === 0 ? '🥇 1. Gönderi (En Başta)' : (i === 3 ? '4. Gönderi (En Sonda)' : (i + 1) + '. Gönderi') %>
+                  </span>
+                  <% if (postUrl) { %>
+                    <a href="<%= postUrl %>" target="_blank" rel="noopener noreferrer" class="insta-preview-link" id="preview_link_<%= i %>" style="font-size: 0.75rem; color: #C2410C; display: inline-flex; align-items: center; gap: 0.25rem; text-decoration: none; font-weight: 600;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      Instagram'da Aç
+                    </a>
+                  <% } %>
+                </div>
+                <input 
+                  type="url" 
+                  name="post_<%= i + 1 %>" 
+                  id="input_post_<%= i %>"
+                  class="form-input insta-slot-input" 
+                  value="<%= postUrl %>" 
+                  placeholder="https://www.instagram.com/p/... veya /reel/..."
+                  style="font-size: 0.88rem; padding: 0.55rem 0.75rem; background: #FFFFFF;"
+                >
+              </div>
+
+              <!-- SIRALAMA OKLARI -->
+              <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                <button type="button" class="btn-arrow-move" onclick="movePostUp(<%= i %>)" title="Yukarı Taşı" <%= i === 0 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '' %>>
+                  ▲
+                </button>
+                <button type="button" class="btn-arrow-move" onclick="movePostDown(<%= i %>)" title="Aşağı Taşı" <%= i === 3 ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '' %>>
+                  ▼
+                </button>
+              </div>
+
+              <!-- TEMİZLE BUTONU -->
+              <button type="button" onclick="clearPostSlot(<%= i %>)" title="Boşalt" style="background: none; border: none; color: #9CA3AF; cursor: pointer; padding: 0.4rem; border-radius: 4px; transition: color 0.2s;" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#9CA3AF'">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </button>
+            </div>
+          <% } %>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+          <button type="submit" class="btn-primary" style="padding: 0.75rem 2rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(46, 90, 68, 0.35);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+            Sıralamayı & Değişiklikleri Kaydet
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
 </main>
 
 <!-- GLOBAL CROPPER MODAL DIALOG -->
@@ -536,6 +684,26 @@
     font-weight: 700;
     margin-right: 0.4rem;
   }
+
+  .btn-arrow-move {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    width: 28px;
+    height: 24px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary);
+    transition: all 0.15s;
+  }
+
+  .btn-arrow-move:hover:not(:disabled) {
+    background: var(--primary);
+    color: #FFFFFF;
+  }
 </style>
 
 <script>
@@ -546,8 +714,81 @@
     const targetPane = document.getElementById(tabId);
     if (targetPane) targetPane.classList.add('active');
 
-    const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+    const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId));
     if (clickedBtn) clickedBtn.classList.add('active');
+
+    const generalSaveBar = document.getElementById('generalSaveBar');
+    if (generalSaveBar) {
+      generalSaveBar.style.display = (tabId === 'tab-instagram') ? 'none' : 'flex';
+    }
+  }
+
+  // Handle URL hash on load (e.g. #tab-instagram)
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.hash) {
+      const hashId = window.location.hash.replace('#', '');
+      if (document.getElementById(hashId)) {
+        switchTab(hashId);
+      }
+    }
+  });
+
+  // INSTAGRAM REORDER HELPERS
+  function movePostUp(index) {
+    if (index <= 0) return;
+    const currentInput = document.getElementById('input_post_' + index);
+    const prevInput = document.getElementById('input_post_' + (index - 1));
+    if (!currentInput || !prevInput) return;
+    const temp = currentInput.value;
+    currentInput.value = prevInput.value;
+    prevInput.value = temp;
+    updatePreviewLink(index);
+    updatePreviewLink(index - 1);
+    highlightRow(index);
+    highlightRow(index - 1);
+  }
+
+  function movePostDown(index) {
+    if (index >= 3) return;
+    const currentInput = document.getElementById('input_post_' + index);
+    const nextInput = document.getElementById('input_post_' + (index + 1));
+    if (!currentInput || !nextInput) return;
+    const temp = currentInput.value;
+    currentInput.value = nextInput.value;
+    nextInput.value = temp;
+    updatePreviewLink(index);
+    updatePreviewLink(index + 1);
+    highlightRow(index);
+    highlightRow(index + 1);
+  }
+
+  function clearPostSlot(index) {
+    const input = document.getElementById('input_post_' + index);
+    if (input) {
+      input.value = '';
+      updatePreviewLink(index);
+      highlightRow(index);
+    }
+  }
+
+  function updatePreviewLink(index) {
+    const input = document.getElementById('input_post_' + index);
+    const link = document.getElementById('preview_link_' + index);
+    if (!link) return;
+    if (input && input.value.trim()) {
+      link.href = input.value.trim();
+      link.style.display = 'inline-flex';
+    } else {
+      link.style.display = 'none';
+    }
+  }
+
+  function highlightRow(index) {
+    const row = document.querySelector(`.insta-post-row[data-index="${index}"]`);
+    if (row) {
+      row.style.background = '#FEF3C7';
+      setTimeout(() => { row.style.background = '#FAF8F5'; }, 400);
+    }
   }
 
   // GLOBAL CROPPER FOR SETTINGS

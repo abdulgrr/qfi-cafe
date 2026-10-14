@@ -377,9 +377,12 @@ const getSettingsPage = async (req, res) => {
     const settings = await settingsService.getSettings();
     const isSaved = req.query.saved === 'true';
     const supabaseReady = await settingsService.checkSupabaseTableStatus();
+    const instagramPosts = await settingsService.getInstagramPosts();
+
     res.render('admin/settings', {
       title: 'Site İçeriği & Ayarlar | Qfi Cafe',
       settings,
+      instagramPosts: instagramPosts || [],
       isSaved,
       supabaseReady,
       error: null
@@ -389,6 +392,7 @@ const getSettingsPage = async (req, res) => {
     res.render('admin/settings', {
       title: 'Site İçeriği & Ayarlar | Qfi Cafe',
       settings: settingsService.defaultSettings,
+      instagramPosts: [],
       isSaved: false,
       supabaseReady: false,
       error: 'Ayarlar yüklenirken bir hata oluştu.'
@@ -415,6 +419,51 @@ const updateSiteSettings = async (req, res) => {
   }
 };
 
+/**
+ * Add New Instagram Post to top of queue (FIFO)
+ */
+const addInstagramPost = async (req, res) => {
+  try {
+    const postUrl = req.body.post_url;
+    const posts = await settingsService.pushInstagramPost(postUrl);
+    if (req.xhr || req.headers.accept?.includes('application/json') || req.is('json')) {
+      return res.json({ success: true, posts });
+    }
+    res.redirect('/admin/settings?saved=true#tab-instagram');
+  } catch (error) {
+    console.error('Add instagram post error:', error);
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+      return res.status(500).json({ success: false, error: error.message });
+    }
+    res.redirect('/admin/settings');
+  }
+};
+
+/**
+ * Reorder or update all 4 Instagram posts
+ */
+const updateInstagramPosts = async (req, res) => {
+  try {
+    let posts = [];
+    if (Array.isArray(req.body.posts)) {
+      posts = req.body.posts;
+    } else if (req.body.post_1 || req.body.post_2 || req.body.post_3 || req.body.post_4) {
+      posts = [req.body.post_1, req.body.post_2, req.body.post_3, req.body.post_4];
+    }
+    const updated = await settingsService.saveInstagramPosts(posts);
+    if (req.xhr || req.headers.accept?.includes('application/json') || req.is('json')) {
+      return res.json({ success: true, posts: updated });
+    }
+    res.redirect('/admin/settings?saved=true#tab-instagram');
+  } catch (error) {
+    console.error('Update instagram posts error:', error);
+    if (req.xhr || req.headers.accept?.includes('application/json')) {
+      return res.status(500).json({ success: false, error: error.message });
+    }
+    res.redirect('/admin/settings');
+  }
+};
+
 module.exports = {
   getLoginPage,
   postLogin,
@@ -431,6 +480,8 @@ module.exports = {
   updateCategory,
   deleteCategory,
   getSettingsPage,
-  updateSiteSettings
+  updateSiteSettings,
+  addInstagramPost,
+  updateInstagramPosts
 };
 

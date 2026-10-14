@@ -1287,7 +1287,7 @@ a {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (max-width: 1200px) {
@@ -1305,19 +1305,26 @@ a {
 }
 
 .instagram-embed-card {
-  display: flex;
-  justify-content: center;
   width: 100%;
+  height: 500px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.instagram-embed-card .instagram-media {
-  min-width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+.instagram-embed-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.instagram-direct-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 /* 4 INSTAGRAM POSTS GRID */

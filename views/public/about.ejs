@@ -2,22 +2,22 @@
 
 <main class="page-container">
   <div class="page-card">
-    <div style="text-align: center; margin-bottom: 2.5rem;">
+    <div class="page-header-box">
       <h1 class="page-title"><%= settings.about_title || 'Kahve Tutkumuz ve Hikayemiz' %></h1>
-      <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+      <p class="page-subtitle">
         <%= settings.about_subtitle || "Qfi Cafe olarak Pendik'te misafirlerimize unutulmaz bir lezzet ve kahve deneyimi sunuyoruz." %>
       </p>
     </div>
 
-    <div class="responsive-two-col" style="margin-bottom: 3.5rem;">
-      <div>
-        <h3 style="font-family: var(--font-serif); font-size: 1.7rem; margin-bottom: 1rem; color: var(--primary);">
+    <div class="responsive-two-col about-story-row">
+      <div class="about-text-col">
+        <h3 class="about-story-title">
           <%= settings.about_sec1_title || 'Özenle Seçilmiş 3. Nesil Çekirdekler' %>
         </h3>
-        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem;">
+        <p class="about-story-p">
           <%= settings.about_story_1 %>
         </p>
-        <p style="color: var(--text-muted); line-height: 1.8;">
+        <p class="about-story-p">
           Espresso bazlı sıcak içeceklerimizden, 24 saat soğuk demlenen Cold Brew çeşitlerimize kadar her yudumda kaliteyi hissedeceksiniz.
         </p>
       </div>
@@ -26,24 +26,24 @@
       </div>
     </div>
 
-    <div class="responsive-two-col" style="margin-bottom: 3rem;">
+    <div class="responsive-two-col about-story-row">
       <div class="about-img-box">
         <img src="<%= settings.about_image_2 || 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80' %>" alt="Qfi Cafe Bakery">
       </div>
-      <div>
-        <h3 style="font-family: var(--font-serif); font-size: 1.7rem; margin-bottom: 1rem; color: var(--primary);">
+      <div class="about-text-col">
+        <h3 class="about-story-title">
           <%= settings.about_sec2_title || 'Günlük Taze Fırın Lezzetleri' %>
         </h3>
-        <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem;">
+        <p class="about-story-p">
           <%= settings.about_story_2 %>
         </p>
-        <p style="color: var(--text-muted); line-height: 1.8;">
+        <p class="about-story-p">
           Siz de Pendik'teki sıcak atmosferimizde yerinizi alın, taze bir kahve eşliğinde anın tadını çıkarın.
         </p>
       </div>
     </div>
 
-    <div style="text-align: center; margin-top: 3rem;">
+    <div class="about-footer-action">
       <a href="/menu" class="btn-primary">Lezzet Menümüzü İnceleyin &rarr;</a>
     </div>
   </div>

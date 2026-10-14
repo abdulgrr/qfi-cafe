@@ -1539,18 +1539,187 @@ a {
   color: #FFFFFF;
 }
 
+/* SECTION & CARD HELPER CLASSES (DESKTOP DEFAULTS) */
+.features-section {
+  max-width: 1280px;
+  margin: 3.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: #FFFFFF;
+  padding: 1.85rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  padding: 0.95rem;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature-body h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+  color: var(--text-dark);
+}
+
+.feature-body p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.section-title-box {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #EBF3EE;
+  color: var(--primary);
+  padding: 0.35rem 0.9rem;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-main-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.section-main-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.section-footer-action {
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.spotlight-section {
+  max-width: 1200px;
+  margin: 5rem auto;
+  padding: 0 1.5rem;
+}
+
+.spotlight-badge {
+  background: rgba(255, 255, 255, 0.15);
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.spotlight-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  color: #FFFFFF;
+}
+
+.spotlight-desc {
+  color: #E2DBD0;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.page-header-box {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.about-story-row {
+  margin-bottom: 3.5rem;
+}
+
+.about-story-title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.about-story-p {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.about-footer-action {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.location-cta-section {
+  margin-top: 4rem;
+}
+
+.cta-banner-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
 /* MOBILE BOTTOM NAVIGATION BAR */
 .mobile-bottom-nav {
   display: none;
 }
 
+/* ======================================================
+   MOBILE & TABLET RESPONSIVE SYSTEM (MAX-WIDTH: 768px)
+   Engineered for boutique cafe QR menu mobile usability
+   ====================================================== */
 @media (max-width: 768px) {
   body {
-    padding-bottom: 85px;
+    padding-bottom: 80px;
   }
 
   .nav-links {
-    display: none; /* Hide top menu links on mobile in favor of bottom nav */
+    display: none; /* Mobile uses dedicated bottom navigation bar */
   }
 
   .desktop-header-btn,
@@ -1558,30 +1727,25 @@ a {
     display: none;
   }
 
-  .mobile-header-instagram {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #EBF3EE;
-    color: var(--primary);
-    border: 1px solid rgba(46, 90, 68, 0.2);
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.15s ease;
+  .navbar {
+    padding: 0.65rem 1rem;
   }
 
-  .mobile-header-instagram:active {
-    transform: scale(0.92);
+  .brand-logo {
+    font-size: 1.35rem;
   }
 
+  .brand-logo img {
+    max-height: 32px !important;
+  }
+
+  .mobile-header-instagram,
   .mobile-header-call {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: #EBF3EE;
     color: var(--primary);
@@ -1590,16 +1754,44 @@ a {
     transition: transform 0.15s ease;
   }
 
+  .mobile-header-instagram:active,
   .mobile-header-call:active {
     transform: scale(0.92);
   }
 
+  /* GENERAL CONTAINERS & CARDS */
+  .page-container {
+    margin: 1.25rem auto 2.5rem;
+    padding: 0 1rem;
+  }
+
+  .page-card {
+    padding: 1.35rem 1.15rem;
+    border-radius: 18px;
+  }
+
+  .page-header-box {
+    margin-bottom: 1.25rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  /* HERO ON MOBILE */
   .hero {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 1.75rem;
-    padding: 0 1.25rem;
-    margin: 1.5rem auto 3rem;
+    gap: 1.25rem;
+    padding: 0 1rem;
+    margin: 0.85rem auto 2rem;
   }
   
   .hero-text {
@@ -1608,112 +1800,422 @@ a {
     align-items: center;
   }
 
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.85rem;
+    margin-bottom: 0.65rem;
+  }
+
   .hero-text h1 {
-    font-size: 2.15rem;
-    line-height: 1.2;
-    margin-bottom: 0.85rem;
+    font-size: 1.85rem;
+    line-height: 1.22;
+    margin-bottom: 0.55rem;
   }
 
   .hero-text p {
-    font-size: 0.98rem;
-    max-width: 92%;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    max-width: 100%;
+    margin-bottom: 1.15rem;
   }
   
   .hero-actions {
     justify-content: center;
     width: 100%;
-    max-width: 360px;
-    gap: 0.75rem;
+    max-width: 340px;
+    gap: 0.65rem;
+    margin-bottom: 0.25rem;
   }
 
   .hero-actions a {
     flex: 1;
     text-align: center;
     justify-content: center;
-    padding: 0.8rem 1rem;
-    font-size: 0.92rem;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.88rem;
   }
   
   .hero-img-box,
   .hero-slider {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
     width: 100%;
     height: auto;
-    max-height: 330px;
-    border-radius: 20px;
-    box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.18);
+    max-height: 220px;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.14);
   }
 
   .slider-arrow {
-    display: none !important; /* Swipe gesture is used on touch devices */
+    display: none !important;
   }
 
   .slider-dots {
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
-    bottom: 0.85rem !important;
-    padding: 0.35rem 0.65rem !important;
+    bottom: 0.65rem !important;
+    padding: 0.25rem 0.55rem !important;
   }
 
-  .page-card {
-    padding: 1.5rem;
+  /* 3 FEATURES ON MOBILE (COMPACT & CLEAN) */
+  .features-section {
+    margin: 1.5rem auto;
+    padding: 0 1rem;
   }
 
-  .responsive-two-col {
+  .features-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 0.75rem;
   }
 
-  .about-img-box {
-    height: 240px;
+  .feature-card {
+    padding: 1rem 1.15rem;
+    border-radius: 14px;
+    gap: 0.85rem;
+  }
+
+  .feature-icon {
+    padding: 0.65rem;
+    border-radius: 10px;
+  }
+
+  .feature-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .feature-body h4 {
+    font-size: 0.98rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .feature-body p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  /* MENU PAGE TOP & SEARCH ON MOBILE */
+  .menu-header-box {
+    margin: 1.25rem auto 0.75rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .menu-title-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .menu-main-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+
+  .menu-main-subtitle {
+    font-size: 0.86rem;
+    margin-bottom: 1rem;
+    line-height: 1.45;
+  }
+
+  .search-box-container {
+    max-width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .search-input {
+    padding: 0.65rem 1rem 0.65rem 2.6rem;
+    font-size: 0.88rem;
+  }
+
+  .search-icon {
+    left: 0.95rem;
+    font-size: 1rem;
+  }
+
+  .search-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* CATEGORY BAR COMPACT STICKY */
+  .category-bar-wrapper {
+    top: 52px;
+    padding: 0.5rem 0;
+  }
+
+  .category-bar {
+    padding: 0 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .category-pill {
+    padding: 0.45rem 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  .pill-count {
+    font-size: 0.68rem;
+    padding: 0.1rem 0.35rem;
+  }
+
+  /* 2-COLUMN APP-STYLE QR MENU GRID */
+  .product-section {
+    margin: 1rem auto 3rem;
+    padding: 0 0.85rem;
+  }
+
+  .section-title-box {
+    margin-bottom: 1.35rem;
+  }
+
+  .section-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .section-main-title {
+    font-size: 1.65rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+
+  .section-main-desc {
+    font-size: 0.85rem;
+  }
+
+  .section-footer-action {
+    margin-top: 1.75rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .boutique-card,
+  .product-card {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 14px rgba(36, 26, 20, 0.05) !important;
+  }
+
+  .boutique-img-wrapper,
+  .product-img-wrapper {
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+  }
+
+  .boutique-img-wrapper::after,
+  .product-img-wrapper::after {
+    height: 48px !important;
+  }
+
+  .out-of-stock-overlay-badge {
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.22rem 0.55rem;
+    font-size: 0.65rem;
+  }
+
+  .out-of-stock-overlay-badge svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .boutique-card-body,
+  .product-details {
+    padding: 0.35rem 0.65rem 0.75rem !important;
+  }
+
+  .boutique-card-top-row,
+  .product-title-row {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .boutique-cat-badge {
+    font-size: 0.62rem !important;
+    padding: 0.15rem 0.45rem !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  .boutique-price-badge,
+  .product-price {
+    font-size: 0.88rem !important;
+    padding: 0.18rem 0.5rem !important;
+    font-weight: 800 !important;
+  }
+
+  .currency-sym {
+    font-size: 0.72rem !important;
+  }
+
+  .boutique-product-title,
+  .product-name {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .boutique-product-desc,
+  .product-desc {
+    font-size: 0.74rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0.4rem !important;
+    -webkit-line-clamp: 2 !important;
+    min-height: 2em !important;
+  }
+
+  .boutique-tags-row {
+    gap: 0.25rem !important;
+    padding-top: 0.4rem !important;
+  }
+
+  .boutique-tag-pill {
+    font-size: 0.64rem !important;
+    padding: 0.14rem 0.42rem !important;
+  }
+
+  .boutique-tag-pill .tag-dot {
+    width: 4px !important;
+    height: 4px !important;
+  }
+
+  /* SPOTLIGHT BANNER ON MOBILE */
+  .spotlight-section {
+    margin: 2rem auto !important;
+    padding: 0 1rem !important;
   }
 
   .spotlight-banner {
     grid-template-columns: 1fr;
-    border-radius: 20px;
+    border-radius: 18px !important;
   }
 
   .spotlight-content {
-    padding: 2.25rem 1.5rem 1.75rem;
+    padding: 1.5rem 1.25rem 1.25rem !important;
     text-align: center;
     align-items: center;
   }
 
-  .spotlight-content h2 {
-    font-size: 1.85rem !important;
+  .spotlight-badge {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.75rem !important;
+    margin-bottom: 0.65rem !important;
   }
 
-  .spotlight-content a {
-    margin: 0 auto;
+  .spotlight-title {
+    font-size: 1.45rem !important;
+    margin-bottom: 0.65rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .spotlight-desc {
+    font-size: 0.84rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.15rem !important;
   }
 
   .spotlight-image-box {
-    min-height: 220px;
-    height: 240px;
+    height: 180px !important;
+    min-height: 180px !important;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+  /* INSTAGRAM ON MOBILE */
+  .instagram-feed-section {
+    margin: 2rem auto !important;
+    padding: 0 1rem !important;
   }
 
-  .gallery-item {
-    height: 160px;
-    border-radius: 14px;
+  .instagram-widget-card {
+    padding: 1.25rem 1rem !important;
+    border-radius: 18px !important;
   }
 
-  .product-grid {
+  .instagram-widget-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.85rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .btn-instagram-follow {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.65rem 1rem !important;
+    font-size: 0.88rem !important;
+  }
+
+  .instagram-embeds-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.15rem !important;
+  }
+
+  .instagram-embed-card {
+    height: 470px !important;
+    border-radius: 14px !important;
+  }
+
+  /* ABOUT PAGE ON MOBILE */
+  .responsive-two-col {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
 
-  .product-img-wrapper,
-  .boutique-img-wrapper {
-    aspect-ratio: 1 / 1;
-    height: auto;
+  .about-story-row {
+    margin-bottom: 2rem !important;
+  }
+
+  .about-story-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .about-story-p {
+    font-size: 0.86rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .about-img-box {
+    height: 190px !important;
+    border-radius: 14px !important;
+  }
+
+  .about-footer-action {
+    margin-top: 1.5rem !important;
+  }
+
+  /* CONTACT PAGE ON MOBILE */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    margin-top: 1.25rem !important;
+  }
+
+  .contact-item {
+    padding: 1.15rem !important;
+    border-radius: 14px !important;
+  }
+
+  .contact-item h4 {
+    font-size: 1rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .contact-item p {
+    font-size: 0.88rem !important;
+  }
+
+  /* LOCATION CTA BANNER ON MOBILE */
+  .location-cta-section {
+    margin-top: 2.25rem !important;
+  }
+
+  .cta-banner-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.65rem !important;
   }
 
   /* MOBILE BOTTOM NAV BAR */
@@ -1723,15 +2225,16 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 64px;
-    background: rgba(255, 255, 255, 0.96);
+    height: 60px;
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     z-index: 1000;
     justify-content: space-around;
     align-items: center;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-    padding-bottom: max(env(safe-area-inset-bottom), 4px);
+    padding-bottom: max(env(safe-area-inset-bottom), 2px);
   }
 
   .mobile-nav-item {
@@ -1741,9 +2244,9 @@ a {
     font-size: 0.72rem;
     font-weight: 700;
     color: #8C827A;
-    gap: 3px;
-    padding: 6px 14px;
-    border-radius: 12px;
+    gap: 2px;
+    padding: 5px 12px;
+    border-radius: 10px;
     text-decoration: none;
     transition: all 0.2s ease;
   }
@@ -1755,28 +2258,28 @@ a {
   }
 
   .mobile-nav-icon {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+  }
+
+  /* FOOTER ON MOBILE */
+  footer {
+    padding: 2.5rem 1rem 1.5rem !important;
+    margin-top: 3rem !important;
+  }
+
+  .footer-container {
+    gap: 1.5rem !important;
   }
 }
 
-@media (max-width: 480px) {
-  .hero-text h1 {
-    font-size: 1.85rem;
-  }
-
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
-
+@media (max-width: 350px) {
   .product-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    grid-template-columns: 1fr !important;
   }
 
-  .product-img-wrapper,
-  .boutique-img-wrapper {
-    aspect-ratio: 1 / 1;
-    height: auto;
+  .boutique-img-wrapper,
+  .product-img-wrapper {
+    aspect-ratio: 16 / 11 !important;
   }
 }
 
